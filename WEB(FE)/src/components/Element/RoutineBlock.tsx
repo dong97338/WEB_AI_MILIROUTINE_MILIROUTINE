@@ -46,7 +46,7 @@ export const RoutineBlock = (
                                 </span>
                             </p>
                             :
-                            <p className="ml-16">루틴 시작일까지&nbsp;
+                            <p className="ml-32">루틴 시작일까지&nbsp;
                                 <span className="text-xl text-orange font-bold" >
                                     D-5 {/* 디데이 추후 개발 */}
                                 </span>
