@@ -1,5 +1,7 @@
 import { Button } from "./Button";
 import { Label } from "./Label";
+import { useNavigate } from "react-router-dom";
+
 
 export interface RoutineBlockProps {
     host?: string;
@@ -8,7 +10,6 @@ export interface RoutineBlockProps {
     category?: string;
     auth_cycle?: number;
     percentage?: number;
-
 }
 
 
@@ -20,9 +21,10 @@ export const RoutineBlock = (
         category = '학습',
         auth_cycle = 5,
         percentage = 30,
-
     }: RoutineBlockProps
 ) => {
+    const navigate = useNavigate()
+    
     return (
         <div className="bg-gray-300 rounded-xl">
             <div className="flex px-4 pt-5 pb-3">
@@ -49,7 +51,9 @@ export const RoutineBlock = (
                         <p className="text-3xl font-bold">{percentage}%</p>
                     </div>
                     <div>
-                        <Button label="인증하기" margin="mt-3" onClick={() => { }} />
+                        <Button label="인증하기" margin="mt-3" onClick={() => {
+                            navigate("/user/my/routine/:routineId/auth")
+                        }} />
                     </div>
                 </div>
 
