@@ -1,3 +1,4 @@
+import addImageServerPrefix from '@/utils/addImageServerPrefix';
 import translateCategory from '@/utils/translateCategory';
 import { useCallback, useEffect, useState } from 'react';
 import { RoutineItem } from '.';
@@ -36,7 +37,7 @@ export const RankedRoutineRow = ({ from, to }: RankedRoutineRowProps) => {
                 id={routine.id}
                 host={routine.hostName}
                 name={routine.name}
-                thumbnail_img={routine.thumbnail_img}
+                thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
                 category={translateCategory(routine.category)}
                 auth_cycle={routine.auth_cycle}
                 participant={routine.participants}
