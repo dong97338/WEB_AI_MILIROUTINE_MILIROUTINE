@@ -3,6 +3,7 @@ import { Jumbotron, RoutineItem, Carousel, Segment } from '@/components/Element'
 import { MainLayout } from '@/components/Layout';
 import { fetchRankedRoutine } from '@/components/Element/RankedRoutineRow';
 import translateCategory from '@/utils/translateCategory';
+import addImageServerPrefix from '@/utils/addImageServerPrefix';
 
 export const LandingPage = () => {
   const [activeTab, setTab] = useState<string>();
@@ -102,7 +103,7 @@ export const LandingPage = () => {
               id={routine.id}
               host={routine.hostName}
               name={routine.name}
-              thumbnail_img={routine.thumbnail_img}
+              thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
               category={translateCategory(routine.category)}
               auth_cycle={routine.auth_cycle}
               participant={routine.participants}

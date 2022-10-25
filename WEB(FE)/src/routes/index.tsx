@@ -1,13 +1,10 @@
-import { useRoutes } from 'react-router-dom';
+import { useRoutes } from "react-router-dom";
 
-import { useAuth } from '@/lib/auth';
 import { LandingPage, PopularPage, AboutPage } from '@/features/misc';
 import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';
 
 export const AppRoutes = () => {
-  const auth = useAuth();
-
   const commonRoutes = [
     { path: '/', element: <LandingPage /> },
     { path: '/popular', element: <PopularPage /> },
