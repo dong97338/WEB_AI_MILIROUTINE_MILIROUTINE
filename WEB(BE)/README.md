@@ -285,6 +285,7 @@ INSERT INTO level_exp
   | isLogin | true | |
   | user | object | 해당 유저의 `user` 테이블 정보 |
   | rankedRoutine | array of object | 1~10위 까지의 루틴 정보 |
+  | recommendRoutine | array of object | 추천된 10개의 루틴 정보 |
 
 #### 2. **`POST /auth/login` : 로그인**
 
