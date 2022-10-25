@@ -7,8 +7,21 @@ const NUMOFRECOMMEND = 10;
 const MINRANK = 1;
 const MAXRANK = 10;
 
+async function getParticipants(no){
+	var participants = 0;
+	
+	const userRoutines = await data.user_routine.get('routine_id', no);
+	for(const routine of userRoutines){
+		if(routine.type == 'join'){
+			participants++;
+		}
+	}
+	
+	return participants;
+}
+
 const ai = {
-	recommendRoutine : (userNo) => {
+	recommendRoutine : (userNo, res) => {
 		return new Promise((resolve, reject) => {
 			var options = {
 				mode: 'text',
@@ -19,6 +32,12 @@ const ai = {
 			
 			// 경로의 기준이 WEB(BE) 폴더
 			PythonShell.run('r12n.py',options, async function(err, data){
+				if(err){
+					return res.status(400).json({
+					success : false,
+					err : String(err)
+					})
+				}
 				resolve(data.toString());
 			})
 		})
@@ -71,15 +90,7 @@ const output = {
 		const decoded = token.decode(req, res);
 		const userInfo = await data.user.get('id', decoded.id);
 		
-		try{
-			var recommendNo = await ai.recommendRoutine(decoded.no);
-		}
-		catch(e){
-			return res.status(400).json({
-				success : false,
-				err : String(e)
-			})
-		}
+		var recommendNo = await ai.recommendRoutine(decoded.no, res);
 		
 		recommendNo = recommendNo.substr(1, recommendNo.length-2);
 		recommendNo = recommendNo.split(",");
@@ -91,7 +102,13 @@ const output = {
 		var recommendRoutine = [];
 		for(const no of recommendNo){
 			const aiRoutine = await data.routine.get('id', no);
-			recommendRoutine.push(aiRoutine);
+			const hostName = await data.user.get('no', aiRoutine[0].host);
+			aiRoutine[0].hostName = hostName[0].nickname;
+			
+			// 참가자 수 구하기
+			aiRoutine[0].participants = await getParticipants(no);
+			
+			recommendRoutine.push(aiRoutine[0]);
 		}
 		
 		res.json({
