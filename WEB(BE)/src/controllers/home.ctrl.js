@@ -34,8 +34,8 @@ const ai = {
 			PythonShell.run('r12n.py',options, async function(err, data){
 				if(err){
 					return res.status(400).json({
-					success : false,
-					err : String(err)
+						success : false,
+						err : String(err)
 					})
 				}
 				resolve(data.toString());
@@ -104,8 +104,6 @@ const output = {
 			const aiRoutine = await data.routine.get('id', no);
 			const hostName = await data.user.get('no', aiRoutine[0].host);
 			aiRoutine[0].hostName = hostName[0].nickname;
-			
-			// 참가자 수 구하기
 			aiRoutine[0].participants = await getParticipants(no);
 			
 			recommendRoutine.push(aiRoutine[0]);

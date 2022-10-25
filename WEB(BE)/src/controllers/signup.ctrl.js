@@ -113,7 +113,8 @@ const user = {
 		
 		const jwtToken = jwt.token.create(req, res, id, name);
 		
-		const user_no = await data.user.get('id', id)[0].no;
+		const userInfo = await data.user.get('id', id);
+		const user_no = userInfo[0].no
 		
 		for(const item of category){
 			data.user_category.add([user_no, item]);
@@ -126,7 +127,7 @@ const user = {
 		return res.json({
 			success : true,
 			token : jwtToken,
-			user : param
+			user : userInfo[0]
 		})
 	}
 }

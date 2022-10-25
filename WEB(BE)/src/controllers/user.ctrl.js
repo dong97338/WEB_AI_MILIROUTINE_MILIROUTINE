@@ -139,7 +139,8 @@ const output = {
 	goods : async (req, res) => {
 		const decoded = token.decode(req, res);
 		
-		const userPoint = await data.user.get('id', decoded.id)[0].point;
+		const userInfo = await data.user.get('id', decoded.id);
+		const userPoint = userInfo[0].point
 		
 		const goods = await data.goods.getAll();
 		
