@@ -25,7 +25,7 @@ tensor=torch.stack([torch.mean(torch.tensor([model.wv.get_vector(w)for w in r]),
 print(type(tensor))
 # print(type(torch.FloatTensor(tensor[:-1])))
 # print(type(torch.FloatTensor(np.array(tensor[:-1]))))
-torch.save(torch.FloatTensor(tensor[:-1]),'./AI/d2v_tensor.pt')
+torch.save(torch.FloatTensor(tensor),'./AI/d2v_tensor.pt')
 
 # with open('r5e_name.txt')as r,open('r5e_vector.txt','w')as w:
 # 	r=[stopword.Remove(komoran.nouns(krpre.Clean_text(line),0))for line in r]
