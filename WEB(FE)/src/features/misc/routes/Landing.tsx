@@ -42,7 +42,7 @@ export const LandingPage = () => {
         <div className="container max-w-screen-lg flex flex-row items-center mt-2 text-black">
           회원가입을 하시면, 더 알맞은 밀리루틴을 추천해드려요!
         </div>
-
+        {/* 
         <div className="container max-w-screen-lg flex flex-row items-center my-4">
           <Segment
             name="group-1"
@@ -76,7 +76,7 @@ export const LandingPage = () => {
               },
             ]}
           />
-        </div>
+        </div> */}
 
         <Carousel>
           <RoutineItem />

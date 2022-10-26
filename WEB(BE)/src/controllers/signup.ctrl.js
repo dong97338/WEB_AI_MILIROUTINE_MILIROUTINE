@@ -96,14 +96,14 @@ const user = {
 		const userInfoWithEmail = await data.user.get('email', email);
 
 		if(userInfoWithId.length > 0){
-			res.status(400).json({
+			return res.status(400).json({
 				success : false,
 				err : "이미 사용중인 아이디입니다!"
 			});
 		}
 		
 		if(userInfoWithEmail.length > 0){
-			res.status(400).json({
+			return res.status(400).json({
 				success : false,
 				err : "이미 사용중인 이메일입니다!"
 			});
@@ -111,9 +111,10 @@ const user = {
 		
 		data.user.add(param);
 		
-		const token = jwt.token.create(req, res, id, name);
+		const jwtToken = jwt.token.create(req, res, id, name);
 		
-		const user_no = await data.user.get('id', id)[0].no;
+		const userInfo = await data.user.get('id', id);
+		const user_no = userInfo[0].no
 		
 		for(const item of category){
 			data.user_category.add([user_no, item]);
@@ -125,8 +126,8 @@ const user = {
 
 		return res.json({
 			success : true,
-			token : token,
-			user : param
+			token : jwtToken,
+			user : userInfo[0]
 		})
 	}
 }
