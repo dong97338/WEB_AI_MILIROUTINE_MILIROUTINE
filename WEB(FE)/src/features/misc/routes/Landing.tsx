@@ -9,23 +9,23 @@ import storage from '@/utils/storage';
 
 export const LandingPage = () => {
   //  const [activeTab, setTab] = useState<string>();
-  // const [recommendRoutines, setRecommendRoutines] = useState<any[]>([]);
+  const [recommendRoutines, setRecommendRoutines] = useState<any[]>([]);
   const [popularRoutines, setPopularRoutines] = useState<any[]>([]);
 
   useEffect(() => {
-    // const fetchRecommendRoutines = async () => {
-    //   const url: string = SERVER_URL + '/';
-    //   const response = storage.getToken()
-    //     ? await fetch(url, {
-    //         headers: {
-    //           Authorization: `token ${storage.getToken()}`,
-    //         },
-    //       })
-    //     : await fetch(url);
-    //   const json = await response.json();
-    //   return json.recommendRoutine;
-    // };
-    // fetchRecommendRoutines().then(setRecommendRoutines);
+    const fetchRecommendRoutines = async () => {
+      const url: string = SERVER_URL + '/';
+      const response = storage.getToken()
+        ? await fetch(url, {
+            headers: {
+              Authorization: `token ${storage.getToken()}`,
+            },
+          })
+        : await fetch(url);
+      const json = await response.json();
+      return json.recommendRoutine;
+    };
+    fetchRecommendRoutines().then(setRecommendRoutines);
     fetchRankedRoutine(1, 10).then(setPopularRoutines);
   }, []);
 
@@ -95,7 +95,7 @@ export const LandingPage = () => {
         </div> */}
 
         <Carousel>
-          {/* {recommendRoutines.map((routine, idx) => (
+          {recommendRoutines?.map((routine, idx) => (
             <RoutineItem
               key={idx}
               id={routine.id}
@@ -106,15 +106,7 @@ export const LandingPage = () => {
               auth_cycle={routine.auth_cycle}
               participant={routine.participants}
             />
-          ))} */}
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
+          ))}
         </Carousel>
       </section>
 
