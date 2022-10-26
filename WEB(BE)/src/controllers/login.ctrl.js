@@ -65,11 +65,11 @@ const user = {
     if (!token.isToken(req, res)) {
       if (user.hasSameId(userInfo)) {
         if (userInfo[0].pw == (await createHashedPasswordWithSalt(req.body.pw, userInfo[0].salt))) {
-          const token = jwt.token.create(req, res, userInfo[0].no, userInfo[0].id, userInfo[0].name);
+          const jwtToken = jwt.token.create(req, res, userInfo[0].no, userInfo[0].id, userInfo[0].name);
 
           res.json({
             success: true,
-            token: token,
+            token: jwtToken,
             user: userInfo[0],
           });
         } else {
