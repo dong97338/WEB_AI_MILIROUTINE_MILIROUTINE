@@ -48,6 +48,27 @@ const ai = {
 				resolve(data.toString());
 			})
 		})
+	},
+	
+	recommendRefresh : (userNo, refreshNum, res) => {
+		return new Promise((resolve, reject) => {
+			var options = {
+				mode: 'text',
+				pythonOptions : ['-u'],
+				scriptPath: '../AI',
+				args : [userNo, NUMOFRECOMMEND, refreshNum]
+			}
+			
+			PythonShell.run('r12n2.py',options, async function(err, data){
+				if(err){
+					return res.status(400).json({
+						success : false,
+						err : String(err)
+					})
+				}
+				resolve(data.toString());
+			})
+		})
 	}
 }
 
@@ -109,24 +130,30 @@ const output = {
 		const userInfo = await data.user.get('id', decoded.id);
 		
 		// 추천 routine
-		var recommendNo = await ai.recommendRoutine(decoded.no, res);
+		if(!req.query.refresh){
+			var recommendNo = await ai.recommendRoutine(decoded.no, res);
+		}
+		else{
+			var recommendNo = await ai.recommendRefresh(decoded.no, req.query.refresh, res);
+		}
 		
 		recommendNo = recommendNo.substr(1, recommendNo.length-2);
 		recommendNo = recommendNo.split(",");
-		
+
 		for(var i=0; i<recommendNo.length; ++i){
 			recommendNo[i] = Number(recommendNo[i]);
 		}
-		
+
 		var recommendRoutine = [];
 		for(const no of recommendNo){
 			const aiRoutine = await data.routine.get('id', no);
 			const hostName = await data.user.get('no', aiRoutine[0].host);
 			aiRoutine[0].hostName = hostName[0].nickname;
 			aiRoutine[0].participants = await getParticipants(no);
-			
+
 			recommendRoutine.push(aiRoutine[0]);
 		}
+		
 		
 		const authRoutine = await data.auth.getOrderByDate('user_no', decoded.no, NUMOFJOINED);
 		
