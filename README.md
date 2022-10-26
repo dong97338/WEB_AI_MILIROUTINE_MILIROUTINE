@@ -16,18 +16,20 @@
 **밀리루틴**은 이러한 문제를 해결하기 위해 탄생하였습니다.  
 군인의 입장에서, 군인의 특성에 맞춘 루틴 형성 서비스를 제공합니다.
 
-> 개발과 관련된 사항은 세부 폴더의 `README.md`에서 확인 바랍니다!   
+> 개발과 관련된 사항은 세부 폴더의 `README.md`에서 확인 바랍니다!  
 > [기획/디자인 README](assets/README.md) | [프론트엔드 README](<WEB(FE)/README.md>) | [백엔드 README](<WEB(BE)/README.md>) | [AI/ML README](AI/README.md)
+
 ## 🩸 **Pain Points | 해결하려는 문제**
 
 1. 루틴을 세워 자기계발을 하고 싶은 군인이 많지만, 작심삼일에 그치는 경우가 잦다.  
-    → 함께 같은 루틴에 참여하고, 함께 지켜나가는 서비스를 만들자!
+   → 함께 같은 루틴에 참여하고, 함께 지켜나가는 서비스를 만들자!
 2. 루틴 수행을 인증하려면 사진을 찍어야 하는 경우가 많지만, 군인은 영내에서 사진을 찍을 수 없다.  
-    → PC/휴대폰 캡처, 글 업로드를 통해 인증 과정이 과도하게 엄밀해지는 것을 방지하고, 현금 대신 포인트와 기타 게이미피케이션 요소로 대체하여 동기부여를 시키자
+   → PC/휴대폰 캡처, 글 업로드를 통해 인증 과정이 과도하게 엄밀해지는 것을 방지하고, 현금 대신 포인트와 기타 게이미피케이션 요소로 대체하여 동기부여를 시키자
 3. 휴대폰으로 간편하게 참여하면 좋겠지만, 군인은 휴대폰 사용시간이 평일의 경우 3시간 내외로 제한적이다.  
-    → 앱이 아닌 웹(Web) 서비스로 제작하여 PC로 쉽게 접속할 수 있도록 하자!
+   → 앱이 아닌 웹(Web) 서비스로 제작하여 PC로 쉽게 접속할 수 있도록 하자!
 
 ## ☝️ **Features | 기능**
+
 - 습관화하고 싶은 루틴을 정해 모임을 개설할 수 있으며, 관심 있는 모임에 참여하거나 좋아요를 할 수 있습니다.
 - 유저가 관심 있어 하는 밀리루틴 정보를 수집하여 AI가 맞춤 루틴을 추천해줍니다.
 - 참여자순으로 정렬된 인기 루틴을 볼 수 있습니다.
@@ -41,7 +43,17 @@
 ## ⚙️ **How to Install | 설치 방법**
 
 ```shell
-git clone https://github.com/osamhack2022/WEB_AI_MILIROUTINE_MILIROUTINE.git
+$ git clone https://github.com/osamhack2022/WEB_AI_MILIROUTINE_MILIROUTINE.git
+$ cd WEB_AI_MILIROUTINE_MILIROUTINE/
+```
+
+```shell
+# WEB(BE)/src/token/.env
+SECRET_KEY=routine1234
+```
+
+```shell
+$ docker-compose up -d
 ```
 
 ## ✔️ **Getting Started | 튜토리얼**
@@ -85,7 +97,6 @@ git clone https://github.com/osamhack2022/WEB_AI_MILIROUTINE_MILIROUTINE.git
 - `Git`
 - `Vite`
 - `Docker-compose`
-
 
 ## 👋 **Team Info | 팀 정보**
 

@@ -6,16 +6,11 @@
 
 ```shell
 # src/db/.env
-DB_HOST=**.**.**.**
-DB_USER=miliroutine_developer
-DB_PASSWORD=*******
-DB_PORT=*****
-DB_DATABASE=miliroutine_db
 ```
 
 ```shell
 # src/token/.env
-SECRET_KEY=*********
+SECRET_KEY=routine1234
 ```
 
 ```shell
