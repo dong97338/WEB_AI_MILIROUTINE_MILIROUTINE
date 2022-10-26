@@ -1,5 +1,6 @@
 # import gensim
 # import torch
+import sys
 import consql as cs
 from u2v import u2v  # user벡터와 유사한 루틴을 순서대로 나열
 
@@ -41,6 +42,9 @@ def r12n(i,n):  # i번 유저한테 루틴 n개 추천
     for c in checked:
         ret.remove(c)
     return ret[:n]
+    
+if __name__ =='__main__':
+    r12n(sys.argv[1], sys.argv[2])
 
 # for i in range(1,11):
 print(11,"번 유저 추천 루틴 번호",r12n(11,10))
