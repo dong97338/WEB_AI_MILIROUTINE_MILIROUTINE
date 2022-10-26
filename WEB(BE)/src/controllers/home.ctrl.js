@@ -7,10 +7,16 @@ const NUMOFRECOMMEND = 10;
 const MINRANK = 1;
 const MAXRANK = 10;
 
-async function getParticipants(no){
+async function getUserName(userNo){
+	const userInfo = await data.user.get('no', userNo);
+	const name = userInfo[0].nickname;
+	return name;
+}
+
+async function getParticipants(routineId){
 	var participants = 0;
 	
-	const userRoutines = await data.user_routine.get('routine_id', no);
+	const userRoutines = await data.user_routine.get('routine_id', routineId);
 	for(const routine of userRoutines){
 		if(routine.type == 'join'){
 			participants++;
@@ -81,12 +87,22 @@ const output = {
 		}
 		
 		if(!token.isToken(req, res)){
+			const randomRoutine = await data.routine.getRandom(NUMOFRECOMMEND);
+			
+			for(const item of randomRoutine){
+				item.hostName = await getUserName(item.host);
+				item.participants = await getParticipants(item.id);
+			}
+			
 			return res.json({
 				success : true,
 				isLogin : false,
-				rankedRoutine : rankedRoutine
+				rankedRoutine : rankedRoutine,
+				recommendRoutine : randomRoutine
 			})
 		}
+		
+		//로그인 되었을 때
 		const decoded = token.decode(req, res);
 		const userInfo = await data.user.get('id', decoded.id);
 		

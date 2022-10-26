@@ -115,6 +115,17 @@ const routine = {
       }
     );
   },
+	
+  getRandom: async (routineNum) => {
+    return new Promise(function (resolve, reject) {
+      db.query('SELECT * FROM routine ORDER BY RAND() LIMIT '+routineNum+'', function (err, rows, fields) {
+        if (err) {
+          throw new Error(err);
+        }
+        resolve(rows);
+      });
+    });
+  }
 };
 
 const user_routine = {
