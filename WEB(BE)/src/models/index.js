@@ -115,6 +115,17 @@ const routine = {
       }
     );
   },
+	
+  getRandom: async (routineNum) => {
+    return new Promise(function (resolve, reject) {
+      db.query('SELECT * FROM routine ORDER BY RAND() LIMIT '+routineNum+'', function (err, rows, fields) {
+        if (err) {
+          throw new Error(err);
+        }
+        resolve(rows);
+      });
+    });
+  }
 };
 
 const user_routine = {
@@ -177,6 +188,17 @@ const auth = {
       if (err) {
         throw new Error(err);
       }
+    });
+  },
+	
+  getOrderByDate : async (item, val, limitNum) => {
+    return new Promise(function (resolve, reject) {
+      db.query('SELECT * FROM auth WHERE ' + item + ' = ? ORDER BY date LIMIT ' + limitNum + '', val, function (err, rows, fields) {
+        if (err) {
+          throw new Error(err);
+        }
+        resolve(rows);
+      });
     });
   },
 };

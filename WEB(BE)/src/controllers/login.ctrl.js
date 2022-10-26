@@ -60,59 +60,39 @@ const user = {
 				err : "Password를 찾을 수 없습니다"
 			});
 		}
-		
+
 		const userInfo = await data.user.get('id', req.body.id);
-		
-		if(!token.isToken(req, res)){
-			if(user.hasSameId(userInfo)){ 
-				if(userInfo[0].pw == await createHashedPasswordWithSalt(req.body.pw, userInfo[0].salt)){
-					const jwtToken = jwt.token.create(req, res, userInfo[0].no, userInfo[0].id, userInfo[0].name);
-					
-					return res.json({
-						success : true,
-						token : jwtToken,
-						user : userInfo[0]
-					});
+
+		if (!token.isToken(req, res)) {
+			if (user.hasSameId(userInfo)) {
+				if (userInfo[0].pw == (await createHashedPasswordWithSalt(req.body.pw, userInfo[0].salt))) {
+				  const jwtToken = jwt.token.create(req, res, userInfo[0].no, userInfo[0].id, userInfo[0].name);
+
+				  res.json({
+					success: true,
+					token: jwtToken,
+					user: userInfo[0],
+				  });
+				} else {
+				  return res.status(400).json({
+					success: false,
+					err: '비밀번호가 틀렸습니다!',
+				  });
 				}
-				else{
-					return res.status(400).json({
-						success : false,
-						err : "비밀번호가 틀렸습니다!"
-					});
-				}
-			}
-
-    const userInfo = await data.user.get('id', req.body.id);
-
-    if (!token.isToken(req, res)) {
-      if (user.hasSameId(userInfo)) {
-        if (userInfo[0].pw == (await createHashedPasswordWithSalt(req.body.pw, userInfo[0].salt))) {
-          const token = jwt.token.create(req, res, userInfo[0].no, userInfo[0].id, userInfo[0].name);
-
-          res.json({
-            success: true,
-            token: token,
-            user: userInfo[0],
-          });
-        } else {
-          return res.status(400).json({
-            success: false,
-            err: '비밀번호가 틀렸습니다!',
-          });
-        }
-      } else {
-        return res.status(400).json({
-          success: false,
-          err: '아이디가 존재하지 않습니다!',
-        });
-      }
-    } else {
-      return res.status(400).json({
-        success: false,
-        err: '이미 로그인 되어있습니다!',
-      });
-    }
-  },
+			} 
+			else {
+				return res.status(400).json({
+				  success: false,
+				  err: '아이디가 존재하지 않습니다!',
+				});
+		  	}
+		} else {
+		  return res.status(400).json({
+			success: false,
+			err: '이미 로그인 되어있습니다!',
+		  });
+		}
+	},
 };
 
 module.exports = {

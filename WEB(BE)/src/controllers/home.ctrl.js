@@ -4,13 +4,20 @@ const popular = require('./popular.ctrl');
 const {PythonShell} = require('python-shell');
 
 const NUMOFRECOMMEND = 10;
+const NUMOFJOINED = 4;
 const MINRANK = 1;
 const MAXRANK = 10;
 
-async function getParticipants(no){
+async function getUserName(userNo){
+	const userInfo = await data.user.get('no', userNo);
+	const name = userInfo[0].nickname;
+	return name;
+}
+
+async function getParticipants(routineId){
 	var participants = 0;
 	
-	const userRoutines = await data.user_routine.get('routine_id', no);
+	const userRoutines = await data.user_routine.get('routine_id', routineId);
 	for(const routine of userRoutines){
 		if(routine.type == 'join'){
 			participants++;
@@ -32,6 +39,27 @@ const ai = {
 			
 			// 경로의 기준이 WEB(BE) 폴더
 			PythonShell.run('r12n.py',options, async function(err, data){
+				if(err){
+					return res.status(400).json({
+						success : false,
+						err : String(err)
+					})
+				}
+				resolve(data.toString());
+			})
+		})
+	},
+	
+	recommendRefresh : (userNo, refreshNum, res) => {
+		return new Promise((resolve, reject) => {
+			var options = {
+				mode: 'text',
+				pythonOptions : ['-u'],
+				scriptPath: '../AI',
+				args : [userNo, NUMOFRECOMMEND, refreshNum]
+			}
+			
+			PythonShell.run('r12n2.py',options, async function(err, data){
 				if(err){
 					return res.status(400).json({
 						success : false,
@@ -70,6 +98,7 @@ const output = {
 		const userRoutines = await data.user_routine.getAll();
 		const JoinedRoutine = popular.process.sortRank(userRoutines);
 		
+		// 인기 루틴
 		var rankedRoutine = [];
 		
 		for(var rank = MINRANK; rank <= MAXRANK; ++rank){
@@ -81,40 +110,67 @@ const output = {
 		}
 		
 		if(!token.isToken(req, res)){
+			const randomRoutine = await data.routine.getRandom(NUMOFRECOMMEND);
+			
+			for(const item of randomRoutine){
+				item.hostName = await getUserName(item.host);
+				item.participants = await getParticipants(item.id);
+			}
+			
 			return res.json({
 				success : true,
 				isLogin : false,
-				rankedRoutine : rankedRoutine
+				rankedRoutine : rankedRoutine,
+				recommendRoutine : randomRoutine
 			})
 		}
+		
+		//로그인 되었을 때
 		const decoded = token.decode(req, res);
 		const userInfo = await data.user.get('id', decoded.id);
 		
-		var recommendNo = await ai.recommendRoutine(decoded.no, res);
+		// 추천 routine
+		if(!req.query.refresh){
+			var recommendNo = await ai.recommendRoutine(decoded.no, res);
+		}
+		else{
+			var recommendNo = await ai.recommendRefresh(decoded.no, req.query.refresh, res);
+		}
 		
 		recommendNo = recommendNo.substr(1, recommendNo.length-2);
 		recommendNo = recommendNo.split(",");
-		
+
 		for(var i=0; i<recommendNo.length; ++i){
 			recommendNo[i] = Number(recommendNo[i]);
 		}
-		
+
 		var recommendRoutine = [];
 		for(const no of recommendNo){
 			const aiRoutine = await data.routine.get('id', no);
 			const hostName = await data.user.get('no', aiRoutine[0].host);
 			aiRoutine[0].hostName = hostName[0].nickname;
 			aiRoutine[0].participants = await getParticipants(no);
-			
+
 			recommendRoutine.push(aiRoutine[0]);
 		}
+		
+		
+		const authRoutine = await data.auth.getOrderByDate('user_no', decoded.no, NUMOFJOINED);
+		
+		var currentRoutines = [];
+		for(const item of authRoutine){
+			const currentRoutine = await data.routine.get('id', authRoutine[0].routine_id);
+			currentRoutines.push(currentRoutine[0]);
+		}
+		
 		
 		res.json({
 			success : true,
 			isLogin : true,
 			user : userInfo[0],
 			rankedRoutine : rankedRoutine,
-			recommendRoutine : recommendRoutine
+			recommendRoutine : recommendRoutine,
+			currentRoutine : currentRoutines
 		})
 	}
 }
