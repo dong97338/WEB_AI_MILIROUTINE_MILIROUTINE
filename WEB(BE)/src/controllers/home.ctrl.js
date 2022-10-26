@@ -4,6 +4,7 @@ const popular = require('./popular.ctrl');
 const {PythonShell} = require('python-shell');
 
 const NUMOFRECOMMEND = 10;
+const NUMOFJOINED = 4;
 const MINRANK = 1;
 const MAXRANK = 10;
 
@@ -76,6 +77,7 @@ const output = {
 		const userRoutines = await data.user_routine.getAll();
 		const JoinedRoutine = popular.process.sortRank(userRoutines);
 		
+		// 인기 루틴
 		var rankedRoutine = [];
 		
 		for(var rank = MINRANK; rank <= MAXRANK; ++rank){
@@ -106,6 +108,7 @@ const output = {
 		const decoded = token.decode(req, res);
 		const userInfo = await data.user.get('id', decoded.id);
 		
+		// 추천 routine
 		var recommendNo = await ai.recommendRoutine(decoded.no, res);
 		
 		recommendNo = recommendNo.substr(1, recommendNo.length-2);
@@ -125,12 +128,22 @@ const output = {
 			recommendRoutine.push(aiRoutine[0]);
 		}
 		
+		const authRoutine = await data.auth.getOrderByDate('user_no', decoded.no, NUMOFJOINED);
+		
+		var currentRoutines = [];
+		for(const item of authRoutine){
+			const currentRoutine = await data.routine.get('id', authRoutine[0].routine_id);
+			currentRoutines.push(currentRoutine[0]);
+		}
+		
+		
 		res.json({
 			success : true,
 			isLogin : true,
 			user : userInfo[0],
 			rankedRoutine : rankedRoutine,
-			recommendRoutine : recommendRoutine
+			recommendRoutine : recommendRoutine,
+			currentRoutine : currentRoutines
 		})
 	}
 }
