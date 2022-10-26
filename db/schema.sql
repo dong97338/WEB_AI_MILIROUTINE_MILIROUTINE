@@ -4,10 +4,10 @@ USE miliroutine_db;
 CREATE TABLE user (
     no INT UNSIGNED AUTO_INCREMENT,
     id VARCHAR(30),
-    pw VARCHAR(100) NOT NULL,
-    salt VARCHAR(64) NOT NULL,
+    pw VARCHAR(128) NOT NULL,
+    salt VARCHAR(128) NOT NULL,
     email VARCHAR(60) NOT NULL,
-    nickname VARCHAR(10) NOT NULL,
+    nickname VARCHAR(30) NOT NULL,
     profile_img VARCHAR(300),
     background_img VARCHAR(300),
     point INT UNSIGNED DEFAULT 0,
