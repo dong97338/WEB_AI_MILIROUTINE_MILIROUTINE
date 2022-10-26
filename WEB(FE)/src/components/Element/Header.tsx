@@ -5,7 +5,8 @@ import { Button } from '@/components/Element/Button';
 import Logo from '@/assets/Logo.svg';
 import storage from '@/utils/storage';
 import { SERVER_URL } from '@/utils/globalVariables';
-import { ProfileButton } from './ProfileButton';
+import addImageServerPrefix from '@/utils/addImageServerPrefix';
+import { LevelBar } from './LevelBar';
 
 export interface UserProps {
   no: number;
@@ -35,11 +36,10 @@ export const Header = () => {
     exp: 0,
   });
 
-  const [isProfileClicked, toggleProfileClicked] = useState(); // 개발 중
+  const [isProfileClicked, setIsProfileClicked] = useState<boolean>(false); // 개발 중
 
   useEffect(() => {
     const fetchIsLogin = async () => {
-      console.log('fetchIsLogin');
       const url: string = SERVER_URL + '/';
       const response = storage.getToken()
         ? await fetch(url, {
@@ -95,6 +95,13 @@ export const Header = () => {
     navigate('/');
   }, []);
 
+  const goToSetting = useCallback(() => {
+    navigate('/user/setting');
+  }, []);
+  const goToPointshop = useCallback(() => {
+    navigate('/user/pointshop');
+  }, []);
+
   return (
     <header className="w-screen flex items-center justify-center bg-white">
       <div className="container max-w-screen-xl flex flex-row items-center justify-between py-4">
@@ -106,15 +113,32 @@ export const Header = () => {
         {isLogin ? (
           <div className="flex flex-row items-center justify-center">
             <NavItem label="나의 밀리루틴" text="font-bold" margin="mx-4" onClick={goToMyPage} />
-            <ProfileButton
-              nickname={user.nickname}
-              profile_img={user.profile_img}
-              background_img={user.background_img}
-              point={user.point}
-              exp={user.exp}
-              margin={'mx-4'}
-              onClick={() => {}}
-            />
+            <div className="relative">
+              <button className="mx-4" onClick={() => setIsProfileClicked((cur) => !cur)}>
+                <img src={addImageServerPrefix(user.profile_img)} className="w-10 h-10 rounded-full" />
+              </button>
+              {isProfileClicked ? (
+                <div className="absolute w-48 h-72 top-14 -left-14 rounded-2xl bg-white-200">
+                  <img src={addImageServerPrefix(user.background_img)} className="w-full h-24 rounded-t-2xl" />
+                  <img
+                    src={addImageServerPrefix(user.profile_img)}
+                    className="w-14 h-14 absolute left-16 top-14 rounded-full bg-white-100 "
+                  />
+                  <section className="flex flex-col items-center mt-6">
+                    <div className="text-black font-bold text-xl">{user.nickname}</div>
+                    <LevelBar margin="my-2" exp={user.exp} />
+                    <div>
+                      <span className="text-orange font-bold text-xl">{user.point}</span>
+                      <span className="text-black text-sm ml-1">포인트</span>
+                    </div>
+                  </section>
+                  <section className="flex justify-evenly mt-5 text-sm">
+                    <NavItem label="설정" onClick={goToSetting} />
+                    <NavItem label="포인트샵" onClick={goToPointshop} />
+                  </section>
+                </div>
+              ) : null}
+            </div>
             <NavItem label="로그아웃" margin="ml-4" onClick={goToLogout} />
           </div>
         ) : (
