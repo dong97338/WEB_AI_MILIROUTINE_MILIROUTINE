@@ -21,9 +21,11 @@ defusedxml==0.7.1
 entrypoints==0.4
 executing==1.1.0
 fastjsonschema==2.16.2
+Flask==2.2.2
 flatbuffers==22.9.24
 fonttools==4.37.4
 gast==0.4.0
+gensim==3.8.3
 google-auth==2.12.0
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
@@ -81,6 +83,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
 Pygments==2.13.0
+PyMySQL==1.0.2
 pyparsing==3.0.9
 pyrsistent==0.18.1
 python-dateutil==2.8.2
