@@ -16,7 +16,6 @@ export const PopularPage = () => {
         className="py-10 flex justify-center"
         onClick={() => {
           setRow((row) => [...row, row[row.length - 1] + 1]);
-          console.log(row);
         }}>
         <img src={ArrowDown} />
       </button>

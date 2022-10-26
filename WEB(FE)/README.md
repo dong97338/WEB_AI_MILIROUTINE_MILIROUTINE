@@ -2,10 +2,9 @@
 
 안녕하세요! 밀리루틴 팀의 프론트엔드 README입니다.
 
-## ☝️ **프로젝트 실행 방법**
+## ☝️ **프로젝트 실행 방법 (프론트엔드만 따로)**
 
 ```shell
-$ cd WEB\(FE\)/
 $ yarn install # node_modules를 설치하는 명령어
 $ yarn run dev
 ```
@@ -58,9 +57,7 @@ export interface ButtonProps {
 
 export const Button = ({ label, onClick }: ButtonProps) => {
   return (
-    <button
-      className={`bg-orange text-white-100 font-bold rounded-full`}
-      onClick={onClick}>
+    <button className={`bg-orange text-white-100 font-bold rounded-full`} onClick={onClick}>
       {label}
     </button>
   );
@@ -71,12 +68,7 @@ export const Button = ({ label, onClick }: ButtonProps) => {
 
 ```ts
 import { useState, useCallback, useRef } from 'react';
-import {
-  Jumbotron,
-  RoutineItem,
-  Carousel,
-  Segment,
-} from '@/components/Element';
+import { Jumbotron, RoutineItem, Carousel, Segment } from '@/components/Element';
 import { MainLayout } from '@/components/Layout';
 
 export const LandingPage = () => {
@@ -114,11 +106,7 @@ export const AppRoutes = () => {
     { path: '/popular', element: <PopularPage /> },
   ];
 
-  const element = useRoutes([
-    ...commonRoutes,
-    ...protectedRoutes,
-    ...publicRoutes,
-  ]);
+  const element = useRoutes([...commonRoutes, ...protectedRoutes, ...publicRoutes]);
 
   return <>{element}</>;
 };

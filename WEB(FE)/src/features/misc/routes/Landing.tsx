@@ -4,16 +4,32 @@ import { MainLayout } from '@/components/Layout';
 import { fetchRankedRoutine } from '@/components/Element/RankedRoutineRow';
 import translateCategory from '@/utils/translateCategory';
 import addImageServerPrefix from '@/utils/addImageServerPrefix';
+import { SERVER_URL } from '@/utils/globalVariables';
+import storage from '@/utils/storage';
 
 export const LandingPage = () => {
-  const [activeTab, setTab] = useState<string>();
-  const [routines, setRoutines] = useState<any[]>([]);
+  //  const [activeTab, setTab] = useState<string>();
+  const [recommendRoutines, setRecommendRoutines] = useState<any[]>([]);
+  const [popularRoutines, setPopularRoutines] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchRankedRoutine(1, 10).then(setRoutines);
+    const fetchRecommendRoutines = async () => {
+      const url: string = SERVER_URL + '/';
+      const response = storage.getToken()
+        ? await fetch(url, {
+            headers: {
+              Authorization: `token ${storage.getToken()}`,
+            },
+          })
+        : await fetch(url);
+      const json = await response.json();
+      return json.recommendRoutine;
+    };
+    fetchRecommendRoutines().then(setRecommendRoutines);
+    fetchRankedRoutine(1, 10).then(setPopularRoutines);
   }, []);
 
-  const onSelectedTab = useCallback((value: string) => setTab(value), []);
+  //  const onSelectedTab = useCallback((value: string) => setTab(value), []);
 
   return (
     <MainLayout>
@@ -42,8 +58,8 @@ export const LandingPage = () => {
         <div className="container max-w-screen-lg flex flex-row items-center mt-2 text-black">
           회원가입을 하시면, 더 알맞은 밀리루틴을 추천해드려요!
         </div>
-        {/* 
-        <div className="container max-w-screen-lg flex flex-row items-center my-4">
+
+        {/* <div className="container max-w-screen-lg flex flex-row items-center my-4">
           <Segment
             name="group-1"
             callback={onSelectedTab}
@@ -79,12 +95,18 @@ export const LandingPage = () => {
         </div> */}
 
         <Carousel>
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
-          <RoutineItem />
+          {recommendRoutines?.map((routine, idx) => (
+            <RoutineItem
+              key={idx}
+              id={routine.id}
+              host={routine.hostName}
+              name={routine.name}
+              thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
+              category={translateCategory(routine.category)}
+              auth_cycle={routine.auth_cycle}
+              participant={routine.participants}
+            />
+          ))}
         </Carousel>
       </section>
 
@@ -97,7 +119,7 @@ export const LandingPage = () => {
         </div>
 
         <Carousel>
-          {routines.map((routine, idx) => (
+          {popularRoutines.map((routine, idx) => (
             <RoutineItem
               key={idx}
               id={routine.id}

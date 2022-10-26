@@ -1,7 +1,8 @@
+import { IMAGE_SERVER_URL } from './globalVariables';
+
 const addImageServerPrefix = (url: string) => {
-  const IMAGE_SERVER_IP: string = 'http://52.79.92.84:52187';
   const PATH: string = '/image/';
-  return IMAGE_SERVER_IP + PATH + url;
+  return IMAGE_SERVER_URL + PATH + url;
 };
 
 export default addImageServerPrefix;
