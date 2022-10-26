@@ -2,7 +2,11 @@ import { Button } from '@/components/Element';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Jumbotron = () => {
+interface JumbotronProps {
+  isLogin?: boolean;
+}
+
+export const Jumbotron = ({ isLogin = false }: JumbotronProps) => {
   const navigate = useNavigate();
 
   const goToSignup = useCallback(() => {
