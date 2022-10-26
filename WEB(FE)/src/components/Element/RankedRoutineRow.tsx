@@ -1,10 +1,10 @@
 import addImageServerPrefix from '@/utils/addImageServerPrefix';
+import { SERVER_URL } from '@/utils/globalVariables';
 import translateCategory from '@/utils/translateCategory';
 import { useCallback, useEffect, useState } from 'react';
 import { RoutineItem } from '.';
 
 export const fetchRankedRoutine = async (from: number, to: number) => {
-  const SERVER_URL: string = 'http://localhost:3000'; // 임시
   const url: string = SERVER_URL + `/popular?from=${from}&to=${to}`;
   const response = await fetch(url);
   const json = await response.json();

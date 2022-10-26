@@ -18,6 +18,7 @@ module.exports = {
       },
       blue: '#0066FF',
       green: '#5EC14E',
+      beige: '#FAF7F2',
     },
     extend: {
       width: {

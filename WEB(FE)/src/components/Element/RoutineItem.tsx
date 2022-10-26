@@ -22,7 +22,7 @@ export const RoutineItem = ({
   return (
     <a href={`/routine/${id}`}>
       <div>
-        <img className="border rounded-xl border-black mb-2 w-40 h-40 object-cover bg-white-200 shadow-lg" src={thumbnail_img} />
+        <img className="rounded-xl mb-2 w-40 h-40 object-cover bg-white-200 shadow-lg" src={thumbnail_img} />
         <span className="text-sm text-gray-500">{host}</span>
         <h4 className="text-lg text-black font-bold mb-1">{name}</h4>
         <Label text="text-xs" label={category} />
