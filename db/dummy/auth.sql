@@ -1,1 +1,22 @@
 USE miliroutine_db;
+
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (1, 1, 4, 1, 1, '2022-10-03', 'default_background.jpeg', '오늘은 알고리즘 첫 날이라서 파이썬 사용법에 대해 공부했다. ');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (2, 1, 4, 1, 2, '2022-10-04', 'default_background.jpeg', '별 찍기 20문제 마스터');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (3, 1, 4, 1, 3, '2022-10-05', 'default_background.jpeg', 'DFS/BFS 공부');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (4, 1, 4, 1, 4, '2022-10-06', 'default_background.jpeg', '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (5, 1, 4, 1, 5, '2022-10-08', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (6, 1, 4, 2, 1, '2022-10-10', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (7, 1, 4, 2, 2, '2022-10-12', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (8, 1, 4, 2, 3, '2022-10-13', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (9, 1, 4, 2, 4, '2022-10-14', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (10, 1, 4, 2, 5, '2022-10-16', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (11, 1, 4, 3, 1, '2022-10-17', NULL, NULL);
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (12, 1, 4, 3, 2, '2022-10-18', NULL, NULL);
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (13, 1, 4, 3, 3, '2022-10-19', NULL, NULL);
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (14, 1, 4, 3, 4, '2022-10-20', NULL, NULL);
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (15, 1, 4, 3, 5, '2022-10-21', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (16, 1, 4, 4, 1, '2022-10-24', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (17, 1, 4, 4, 2, '2022-10-25', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (18, 1, 4, 4, 3, '2022-10-27', NULL, '오늘 그래프 이론을 공부했는데 너무 어렵습니다');
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (19, 1, 8, 1, 1, '2022-10-03', NULL, NULL);
+INSERT INTO auth (id, user_no, routine_id, week, day, date, img, text) VALUES (20, 1, 8, 1, 2, '2022-10-04', NULL, NULL);
