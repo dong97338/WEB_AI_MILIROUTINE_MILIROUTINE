@@ -1,20 +1,19 @@
 import { Button, Label } from '@/components/Element';
 import addImageServerPrefix from '@/utils/addImageServerPrefix';
-import { SERVER_URL } from '@/utils/globalVariables';
+import { SERVER_URL, WEEKDAY } from '@/utils/globalVariables';
+import storage from '@/utils/storage';
 import translateCategory from '@/utils/translateCategory';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const fetchRoutine = async (routineId: number) => {
+export const fetchRoutine = async (routineId: number) => {
   const url: string = SERVER_URL + `/routine/${routineId}`;
   const response = await fetch(url);
   const json = await response.json();
   return json.routine;
 };
 
-const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
-
-interface RoutineProps {
+export interface RoutineProps {
   id: number;
   host: number;
   name: string;
@@ -79,6 +78,31 @@ export const RoutineDetailPage = () => {
       }
     );
   }, []);
+
+  const navigate = useNavigate();
+
+  const goToMyPage = useCallback(() => {
+    navigate('/user/my');
+  }, []);
+
+  const joinRoutine = async () => {
+    const url: string = SERVER_URL + `/routine/${routineId}`;
+    if (!storage.getToken()) {
+      alert('로그인 후 참여 가능합니다');
+      return;
+    }
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `token ${storage.getToken()}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error('참여 실패');
+    }
+    alert('참여에 성공하였습니다!');
+    goToMyPage();
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -153,7 +177,7 @@ export const RoutineDetailPage = () => {
             <p className="text-lg mt-5">{description}</p>
           </div>
         ))}
-        <Button margin="my-24" text="text-xl" label={'참여하기'} />
+        <Button margin="my-24" text="text-xl" label={'참여하기'} onClick={joinRoutine} />
       </div>
     </div>
   );

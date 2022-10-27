@@ -1,96 +1,154 @@
-import { Label, Button } from "@/components/Element";
-import { useState } from "react";
+import { Label, Button } from '@/components/Element';
+import { fetchRoutine, RoutineProps } from '@/features/routine/RoutineDetail';
+import addImageServerPrefix from '@/utils/addImageServerPrefix';
+import { SERVER_URL, WEEKDAY } from '@/utils/globalVariables';
+import storage from '@/utils/storage';
+import translateCategory from '@/utils/translateCategory';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-
-interface AuthBlockProps {
-  auth: boolean;
-  date: string;
-  NthWeek: string;
+interface AuthProps {
+  week?: number;
+  day?: number;
+  date?: Date;
+  img?: string;
+  text?: string;
 }
 
+interface AuthBlockProps extends AuthProps {
+  isToday?: boolean;
+}
 
-const AuthBlock = ({ auth, date, NthWeek }: AuthBlockProps) => {
-
-  let [authed, setAuthed] = useState(auth);
-
+const AuthBlock = ({
+  week = 1,
+  day = 2,
+  date = new Date(),
+  img = 'default_background.jpeg',
+  text = '언제쯤 전역할 수 있을까요?',
+  isToday = false,
+}: AuthBlockProps) => {
   return (
-    <div className="bg-gray-300 rounded-xl p-4 w-[640px]">
+    <div className="bg-gray-300 rounded-xl p-4 my-5">
       <div className="flex justify-between">
         <div>
-          <p>{NthWeek}</p>
-          <h4 className="font-bold text-2xl">{date}</h4>
-        </div>
-
-        <div className="flex items-center">
-          <p className="mr-4 cursor-pointer" onClick={() => {
-            //이미지 업로드 기능
-          }}>이미지 업로드</p>
-
-          <p className="mr-4 cursor-pointer" onClick={() => {
-            //글올리기 기능, 루틴에 대한 짧은 메모형식이니 CRUD 중 수정, 삭제 배제해서 추가로 읽기 기능만이라도 필요할 듯한데..
-          }}>글 올리기</p>
-
-          {authed ?
-            <p className="mr-4 font-bold text-gray-400">인증 완료</p>
-            :
-            <Button label="인증하기" onClick={() => {
-              setAuthed(true);
-            }} />}
+          <p className="text-black text-sm">{!isToday ? `${week}주차 ${day}회차` : `오늘(${week}주차 ${day}회차)`}</p>
+          <h4 className="text-black font-bold text-2xl mt-2">
+            {date.getFullYear()}. {date.getMonth() + 1}. {date.getDate()}. ({WEEKDAY[date.getDay()]})
+          </h4>
         </div>
       </div>
-    </div>
-  )
-};
-
-
-export const MyRoutineAuthPage = () => {
-
-  let authBlocks = [
-    <AuthBlock auth = {true} date = "2022.09.13. (화)" NthWeek="1주차 1회차" />,
-    <AuthBlock auth = {true} date = "2022.09.13. (화)" NthWeek="1주차 1회차" />,
-    <AuthBlock auth = {true} date = "2022.09.13. (화)" NthWeek="1주차 1회차" />
-  ];
-  // 서버 결과물 받아오는 배열 가정
-
-
-  return (
-    <div className="flex flex-col items-center basis-[640px]">
-      <div className="flex px-4 pt-5 pb-3 mt-10">
-        <img className="border rounded-xl border-black mb-2 w-40 h-40 object-cover bg-white-200 shadow-lg" src='http://dummyimage.com/214x631.png/5fa2dd/ffffff' />
-        <div className="ml-4">
-          <span className="text-sm text-gray-500">검은연필</span>
-          <h4 className="text-2xl text-black font-bold mb-4 mt-2">하루 5컵 물 마시기</h4>
-          <Label text="text-xs" label={"학습"} />
-          <div className="flex mt-3">
-            <div>
-              <p>주 {5}회 인증</p>
-              <p>2022.09.13. (화) 시작</p>
-              {/* 루틴 시작일 서버에서 받아오면 수정해야함 */}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center ml-20 justify-center">
-          <div className="flex flex-col items-center bg-white-200 w-28 h-28 rounded-full justify-center">
-            <p className="text-3xl font-bold">{24}%</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="w-[30%] text-center border-b mt-8" />
-
-      <div className="mt-12">
-        {authBlocks.map((authBlock, idx) => {
-          return(
-            <div className="mb-4" key={idx}>
-              {authBlock}
-            </div>
-          )
-        })}
-      </div>
-
     </div>
   );
 };
 
+export const MyRoutineAuthPage = () => {
+  const { routineId } = useParams<{ routineId: string }>();
+  const [routine, setRoutine] = useState<RoutineProps>({
+    id: 0, // fetch 이전 초기화 값을 이렇게 설정하는 게 맞는지 의문이네요
+    host: 0,
+    name: '',
+    category: '',
+    thumbnail_img: 'routine-1.jpeg',
+    auth_cycle: 0,
+    auth_description_list: [],
+    start_date: new Date(),
+    duration: 0,
+    point_info_list: [],
+    hostName: '',
+    participants: 0,
+  });
+  const [authList, setAuthList] = useState<AuthProps[]>([]);
 
+  useEffect(() => {
+    fetchRoutine(Number(routineId)).then(
+      ({
+        id,
+        host,
+        name,
+        category,
+        thumbnail_img,
+        auth_cycle,
+        auth_description_list,
+        start_date,
+        duration,
+        point_info_list,
+        hostName,
+        participants,
+      }) => {
+        setRoutine({
+          id,
+          host,
+          name,
+          category,
+          thumbnail_img,
+          auth_cycle,
+          auth_description_list: JSON.parse(auth_description_list),
+          start_date: new Date(String(start_date)),
+          duration,
+          point_info_list: JSON.parse(point_info_list),
+          hostName,
+          participants,
+        });
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthList = async () => {
+      const url: string = SERVER_URL + `/user/routine/${routineId}/auth`;
+      if (!storage.getToken()) {
+        throw new Error('비회원 유저는 나의 밀리루틴을 볼 수 없습니다');
+      }
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${storage.getToken()}`,
+        },
+      });
+      const json = await response.json();
+      console.log(json);
+      return json.auth_list;
+    };
+    // fetchAuthList().then(setAuthList);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center mt-20">
+      <div className="flex">
+        <img src={addImageServerPrefix(routine.thumbnail_img)} className="rounded-xl w-48 h-48 object-cover bg-white-200 shadow-lg" />
+        <div className="ml-6">
+          <span className="text-sm text-gray-500">{routine.hostName}</span>
+          <h4 className="text-2xl text-black font-bold my-2">{routine.name}</h4>
+          <Label text="text-xs" label={translateCategory(routine.category)} />
+          <div className="mt-8">
+            <p>주 {routine.auth_cycle}회 인증</p>
+            <p className="mt-2">
+              {routine.start_date.getFullYear()}. {routine.start_date.getMonth() + 1}. {routine.start_date.getDate()}. (
+              {WEEKDAY[routine.start_date.getDay()]}) 시작
+            </p>
+          </div>
+        </div>
+
+        <div className="ml-24 justify-center">
+          <div className="flex flex-col items-center bg-white-200 w-48 h-48 rounded-full justify-center">
+            <p className="text-black text-3xl font-bold">{0}%</p>
+          </div>
+        </div>
+      </div>
+
+      <hr className="border-1 w-1/2 mt-16" />
+
+      <div className="mt-16 mb-40">
+        {/* <AuthBlock />
+        {authList.map((auth, idx) => (
+          <AuthBlock key={idx} week={auth.week} day={auth.day} date={auth.date} img={auth.img} text={auth.text} isToday={false} />
+        ))} */}
+        <AuthBlock />
+        <AuthBlock />
+        <AuthBlock />
+        <AuthBlock />
+        <AuthBlock />
+        <AuthBlock />
+      </div>
+    </div>
+  );
+};

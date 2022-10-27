@@ -55,16 +55,12 @@ $ yarn start
 const routine = {
   get: async (item, val) => {
     return new Promise(function (resolve, reject) {
-      db.query(
-        'SELECT * FROM routine WHERE ' + item + ' = ?',
-        val,
-        function (err, rows, fields) {
-          if (err) {
-            console.log(err);
-          }
-          resolve(rows);
+      db.query('SELECT * FROM routine WHERE ' + item + ' = ?', val, function (err, rows, fields) {
+        if (err) {
+          console.log(err);
         }
-      );
+        resolve(rows);
+      });
     });
   },
 
@@ -315,7 +311,7 @@ INSERT INTO level_exp
   | success | true | |
   | token | string | JWT 토큰 |
   | user | array of object | {id, pw(hashed), email, name, salt} |
-  
+
 #### 4. **`GET /user/settings` : 회원정보 수정**
 
 - Request Headers
@@ -334,7 +330,6 @@ INSERT INTO level_exp
   | --- | ---------- | ---- |
   | success | true | |
 
-
 #### 4. **`POST /user/settings` : 회원정보 수정**
 
 - Request Headers
@@ -348,17 +343,7 @@ INSERT INTO level_exp
   | success | true | |
   | name | string | |
   | category | array of object | 로그인된 아이디의 카테고리 정보들 출력 (ex. 아래 코드)|
-  	
-	`[{
-            "id": 23,
-            "user_no": 59,
-            "category": "dream"
-        },
-        {
-            "id": 163,
-            "user_no": 59,
-            "category": "study"
-        }]`
+  `[{ "id": 23, "user_no": 59, "category": "dream" }, { "id": 163, "user_no": 59, "category": "study" }]`
 
 #### 5. **`POST /user/settings/pw` : 비밀번호 변경**
 
@@ -379,13 +364,13 @@ INSERT INTO level_exp
 
 ### **루틴 관련**
 
-#### 1. **`GET /popular?from=''&to=''` : 인기 밀리루틴 정보**
+#### 1. **`GET /popular?from=1&to=10` : 인기 밀리루틴 정보**
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
   | success | true | |
-  | rankedRoutine | array of array | from에서 to랭크 까지의 루틴 정보 |
+  | rankedRoutine | array of array | from ~ to 위의 루틴 정보 |
 
 #### 2. **`POST /routine/make` : 밀리루틴 개설하기**
 
@@ -420,14 +405,13 @@ INSERT INTO level_exp
   | success | true | |
   | routine_id | integer | 루틴 고유번호 |
   | routine | object | 해당 루틴의 `routine` 테이블 정보 |
-  
+
 #### 4. **`POST /routine/:routineId` : 루틴 참여하기**
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
   | success | true | |
-  
 - 400 Bad Request
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
@@ -445,10 +429,7 @@ INSERT INTO level_exp
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
   | success | true | |
-  | routine | object 배열 | 해당 루틴의 `routine` 테이블 정보 |
-
->  routine이 하나가 아니므로 수정 필요
->  routine Object 배열로 수정
+  | routine | object 배열 | 참여한 루틴의 `routine` 테이블 정보 + 호스트명 |
 
 #### 6. **`GET /user/my/like` : 좋아요한 밀리루틴 정보**
 
@@ -461,7 +442,7 @@ INSERT INTO level_exp
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
   | success | true | |
-  | likeRoutineId | array | 좋아요한 밀리루틴 ex) [21, 34] |
+  | routine | object 배열 | 좋아요한 루틴의 `routine` 테이블 정보 + 호스트명 |
 
 ### **인증 관련**
 
@@ -477,8 +458,6 @@ INSERT INTO level_exp
   | --- | ---------- | ---- |
   | success | true | |
   | auth_list | array of object | 지금까지의 인증 정보 |
-
-> // auth_list를 넣는 방향으로 수정해야 할듯
 
 #### 2. **`POST /user/routine/:routineId/auth` : 루틴 인증하기**
 
@@ -515,7 +494,7 @@ INSERT INTO level_exp
   | --- | ---------- | ---- |
   | success | true | |
   | userPoint | integer | |
-  | goods | array of object | `goods` 테이블 전체 정보 (id, name, description, thubnail_img,price)|
+  | goods | array of object | `goods` 테이블 전체 정보 |
 
 #### 2. **`POST /user/pointshop` : 포인트샵 품목 구입**
 
