@@ -115,8 +115,6 @@ const output = {
 		
 		var routine;
 		
-		console.log(myRoutine);
-		
 		if(myRoutine[0]){
 			routine = await data.routine.get('id', req.params.routineId);
 			const userInfo = await data.user.get('no', routine[0].host);
