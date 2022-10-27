@@ -53,98 +53,98 @@ const token = {
 };
 
 const output = {
-	setting : async (req, res)=>{
-		const decoded = token.decode(req, res);
-		
-		const name = decoded.name;
-		const categories = await data.user_category.get('user_no', decoded.no);
-		
-		res.json({
-			success : true,
-			name : name,
-		    category : categories
-		})
-	},
+  setting: async (req, res) => {
+    const decoded = token.decode(req, res);
 
-	mine : async (req, res)=>{
-		const decoded = token.decode(req, res);
-		const host = decoded.no;
-		
-		const routines = await data.user_routine.get('user_no', host);
+    const name = decoded.name;
+    const categories = await data.user_category.get('user_no', decoded.no);
 
-		var JoinedRoutine = [];
-		
-		for(const routine of routines){
-			if(routine.type == 'join'){
-				const myRoutine = await data.routine.get('id', routine.routine_id);
-				const userInfo = await data.user.get('no', myRoutine[0].host);
-				myRoutine[0].hostName = userInfo[0].nickname;
-				JoinedRoutine.push(myRoutine[0]);
-			}
-		}
-		
-		res.json({
-			success : true,
-			routine : JoinedRoutine
-		})
-	},
-	
-	like : async (req, res)=>{
-		const decoded = token.decode(req, res)
-		
-		const myRoutine = await data.user_routine.get('user_no',decoded.no);
-		
-		var likeRoutineId = [];
-		for(const routine of myRoutine){
-			if(routine.type == 'like'){
-				const userInfo = await data.user.get('no', routine[0].user_no);
-				routine[0].hostName = userInfo[0].nickname;
-				likeRoutineId.push(routine[0]);
-			}
-		}
-		
-		res.json({
-			success : true,
-			likeRoutineID : likeRoutineId
-		})
-	},
-	
-	auth : async (req, res) => {
-		const decoded = token.decode(req, res);
-		const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
-		
-		var routine;
-		
-		if(myRoutine[0]){
-			routine = await data.routine.get('id', req.params.routineId);
-			const userInfo = await data.user.get('no', routine[0].host);
-			routine[0].hostName = userInfo[0].nickname;
-		}
-		else{
-			routine = []
-		}
-		
-		res.json({
-			success : true,
-			routine : routine[0]
-		})
-	},
-	
-	goods : async (req, res) => {
-		const decoded = token.decode(req, res);
-		
-		const userInfo = await data.user.get('id', decoded.id);
-		const userPoint = userInfo[0].point
-		
-		const goods = await data.goods.getAll();
-		
-		res.json({
-			success : true,
-			userPoint : userPoint,
-			goods : goods
-		})
-	}
-}
+    res.json({
+      success: true,
+      name: name,
+      category: categories,
+    });
+  },
+
+  mine: async (req, res) => {
+    const decoded = token.decode(req, res);
+    const host = decoded.no;
+
+    const routines = await data.user_routine.get('user_no', host);
+
+    var JoinedRoutine = [];
+
+    for (const routine of routines) {
+      if (routine.type == 'join') {
+        const myRoutine = await data.routine.get('id', routine.routine_id);
+        const userInfo = await data.user.get('no', myRoutine[0].host);
+        myRoutine[0].hostName = userInfo[0].nickname;
+        JoinedRoutine.push(myRoutine[0]);
+      }
+    }
+
+    res.json({
+      success: true,
+      routine: JoinedRoutine,
+    });
+  },
+
+  like: async (req, res) => {
+    const decoded = token.decode(req, res);
+
+    const routines = await data.user_routine.get('user_no', decoded.no);
+
+    var likeRoutine = [];
+    for (const routine of routines) {
+      if (routine.type == 'like') {
+        const myRoutine = await data.routine.get('id', routine.routine_id);
+        const userInfo = await data.user.get('no', myRoutine[0].host);
+        myRoutine[0].hostName = userInfo[0].nickname;
+        likeRoutine.push(myRoutine[0]);
+      }
+    }
+
+    res.json({
+      success: true,
+      routine: likeRoutine,
+    });
+  },
+
+  auth: async (req, res) => {
+    const decoded = token.decode(req, res);
+    const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
+
+    var routine;
+
+    if (myRoutine[0]) {
+      routine = await data.routine.get('id', req.params.routineId);
+      const userInfo = await data.user.get('no', routine[0].host);
+      routine[0].hostName = userInfo[0].nickname;
+    } else {
+      routine = [];
+    }
+
+    res.json({
+      success: true,
+      routine: routine[0],
+    });
+  },
+
+  goods: async (req, res) => {
+    const decoded = token.decode(req, res);
+
+    const userInfo = await data.user.get('id', decoded.id);
+    const userPoint = userInfo[0].point;
+
+    const goods = await data.goods.getAll();
+
+    res.json({
+      success: true,
+      userPoint: userPoint,
+      goods: goods,
+    });
+  },
+};
 
 const user = {
   setInfo: (req, res) => {

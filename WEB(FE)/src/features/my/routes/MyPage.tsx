@@ -52,46 +52,47 @@ const MyRoutine = () => {
 };
 
 const FavoriteRoutine = () => {
-  let favoriteRtns = [
-    <RoutineBlock host="운동하자" name="벤치프레스 5세트 매일하기" category="건강" />,
-    <RoutineBlock host="피터집단린치" name="1일 1경제기사 공부" auth_start={false} category="경제" />,
-    <RoutineBlock host="갓생살자" name="식후 비타민 챙겨먹기" category="건강" auth_start={false} />,
-    <RoutineBlock host="몰입캠프가고파" name="매일 코딩 연등 신청하기" category="학습" percentage={64} />,
-  ];
-  // 서버에서 받아오는 루틴들을 담았다고 가정한 배열
+  const [routines, setRoutines] = useState<RoutineProps[]>([]);
+
+  useEffect(() => {
+    const fetchLikeRoutine = async () => {
+      const url: string = SERVER_URL + '/user/my/like';
+      if (!storage.getToken()) {
+        throw new Error('비회원 유저는 나의 밀리루틴을 볼 수 없습니다');
+      }
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${storage.getToken()}`,
+        },
+      });
+      const json = await response.json();
+      return json.routine;
+    };
+    fetchLikeRoutine().then(setRoutines);
+  }, []);
 
   return (
     <div className="mb-40">
-      {favoriteRtns.map((routine, idx) => {
-        return (
-          <div className="mb-4" key={idx}>
-            {routine}
-          </div>
-        );
-      })}
+      {routines.map((routine, idx) => (
+        <RoutineBlock
+          key={idx}
+          id={routine.id}
+          host={routine.hostName}
+          name={routine.name}
+          thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
+          category={translateCategory(routine.category)}
+          auth_cycle={routine.auth_cycle}
+          percentage={77}
+          start_date={new Date(String(routine.start_date))}
+          auth_start={new Date(String(routine.start_date)) < new Date()}
+        />
+      ))}
     </div>
   );
 };
 
 const ParticipatedRoutine = () => {
-  let participatedRtns = [
-    <RoutineBlock host="tod" name="담배 한 개피 덜 피기" category="건강" />,
-    <RoutineBlock host="한국사 1등급" name="매일 한능검 기출 1회 풀고 오답" auth_start={false} />,
-    <RoutineBlock host="백준 브딱" name="백준 1일 1문제" />,
-  ];
-  // 서버에서 받아오는 루틴들을 담았다고 가정한 배열
-
-  return (
-    <div className="mb-40">
-      {participatedRtns.map((routine, idx) => {
-        return (
-          <div className="mb-4" key={idx}>
-            {routine}
-          </div>
-        );
-      })}
-    </div>
-  );
+  return <></>; // 추후 개발
 };
 
 const MyContent = ({ tab }: MyContentProps) => {
@@ -119,7 +120,7 @@ export const MyPage = () => {
   const [tab, setTab] = useState('a');
 
   return (
-    <div className="flex">
+    <div className="flex mb-40">
       <nav className="flex flex-col content-center text-lg mt-10 ml-20">
         <button
           value="a"
