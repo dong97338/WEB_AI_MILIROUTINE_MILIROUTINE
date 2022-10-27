@@ -1,19 +1,17 @@
 import { Button, Label } from '@/components/Element';
 import addImageServerPrefix from '@/utils/addImageServerPrefix';
-import { SERVER_URL } from '@/utils/globalVariables';
+import { SERVER_URL, WEEKDAY } from '@/utils/globalVariables';
 import storage from '@/utils/storage';
 import translateCategory from '@/utils/translateCategory';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const fetchRoutine = async (routineId: number) => {
+export const fetchRoutine = async (routineId: number) => {
   const url: string = SERVER_URL + `/routine/${routineId}`;
   const response = await fetch(url);
   const json = await response.json();
   return json.routine;
 };
-
-const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
 export interface RoutineProps {
   id: number;

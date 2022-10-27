@@ -43,11 +43,11 @@ export const RoutineBlock = ({
 
             {auth_start ? (
               <div className="ml-12">
-                <span>오늘 인증하면</span>
-                <span className="text-xl text-orange font-bold ml-1">1주차 1회차</span>
+                <span>루틴 시작한지</span>
+                <span className="text-xl text-orange font-bold ml-1">{`${getDateDiff(start_date, new Date())}일차`}</span>
               </div>
             ) : (
-              <div className="ml-24">
+              <div className="ml-12">
                 <span>루틴 시작일까지</span>
                 <span className="text-xl text-orange font-bold ml-1">{`D-${getDateDiff(new Date(), start_date)}`}</span>
               </div>
