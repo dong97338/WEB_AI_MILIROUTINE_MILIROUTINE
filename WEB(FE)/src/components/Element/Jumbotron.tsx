@@ -12,6 +12,11 @@ export const Jumbotron = ({ isLogin = false }: JumbotronProps) => {
   const goToSignup = useCallback(() => {
     navigate('auth/signup');
   }, []);
+
+  const goToMyRoutine = useCallback(() => {
+    navigate('user/my');
+  }, []);
+
   return (
     <section className="w-screen flex items-center justify-center bg-beige py-24">
       <div className="container max-w-screen-lg flex flex-row justify-between items-center">
@@ -20,15 +25,38 @@ export const Jumbotron = ({ isLogin = false }: JumbotronProps) => {
           <h1 className="text-black text-4xl font-bold">나의 사소한 루틴 쌓기</h1>
         </div>
 
-        <div className="flex flex-col items-start justify-center flex-1">
-          <p className="text-black text-lg font-normal leading-9">
-            지키고 싶은 밀리루틴을 만들고
-            <br />
-            함께 인증해보세요!
-          </p>
+        {isLogin ? (
+          <div className="flex flex-col items-start justify-center flex-1">
+            <h4 className="text-black text-lg">현재 참여중인 밀리루틴</h4>
+            <div className="flex mt-3">
+              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
+              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
+              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
+              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
+              <div onClick={goToMyRoutine} className="cursor-pointer text-gray-400 w-16 h-16 rounded-full flex justify-center items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col items-start justify-center flex-1">
+            <p className="text-black text-lg font-normal leading-9">
+              지키고 싶은 밀리루틴을 만들고
+              <br />
+              함께 인증해보세요!
+            </p>
 
-          <Button text="text-xl" label="지금 시작하기" margin="mt-4" onClick={goToSignup} />
-        </div>
+            <Button text="text-xl" label="지금 시작하기" margin="mt-4" onClick={goToSignup} />
+          </div>
+        )}
       </div>
     </section>
   );

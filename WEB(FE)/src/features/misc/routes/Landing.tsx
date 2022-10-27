@@ -6,15 +6,29 @@ import translateCategory from '@/utils/translateCategory';
 import addImageServerPrefix from '@/utils/addImageServerPrefix';
 import { SERVER_URL } from '@/utils/globalVariables';
 import storage from '@/utils/storage';
+import { UserProps } from '@/components/Element/Header';
 
 export const LandingPage = () => {
   //  const [activeTab, setTab] = useState<string>();
+  const [isLogin, setIsLogin] = useState<boolean>(storage.getToken());
+  const [user, setUser] = useState<UserProps>({
+    no: 0,
+    id: '',
+    pw: '',
+    salt: '',
+    email: '',
+    nickname: '회원',
+    profile_img: 'default_profile.png',
+    background_img: 'default_background.jpeg',
+    point: 0,
+    exp: 0,
+  });
   const [recommendRoutines, setRecommendRoutines] = useState<any[]>([]);
   const [popularRoutines, setPopularRoutines] = useState<any[]>([]);
   const [refresh, setRefresh] = useState<number>(0);
 
   useEffect(() => {
-    const fetchRecommendRoutines = async () => {
+    const fetchBasicInfo = async () => {
       const url: string = SERVER_URL + '/';
       const response = storage.getToken()
         ? await fetch(url, {
@@ -24,9 +38,13 @@ export const LandingPage = () => {
           })
         : await fetch(url);
       const json = await response.json();
-      return json.recommendRoutine;
+      return [json.isLogin, json.user, json.recommendRoutine];
     };
-    fetchRecommendRoutines().then(setRecommendRoutines);
+    fetchBasicInfo().then(([a, b, c]) => {
+      setIsLogin(a);
+      setUser(b);
+      setRecommendRoutines(c);
+    });
     fetchRankedRoutine(1, 10).then(setPopularRoutines);
   }, []);
 
@@ -53,7 +71,7 @@ export const LandingPage = () => {
 
   return (
     <MainLayout>
-      <Jumbotron />
+      <Jumbotron isLogin={isLogin} />
 
       <section className="w-screen flex flex-col items-center justify-center my-24">
         <div className="container max-w-screen-lg flex flex-row items-center">
@@ -80,7 +98,7 @@ export const LandingPage = () => {
         </div>
 
         <div className="container max-w-screen-lg flex flex-row items-center mt-2 text-black">
-          회원가입을 하시면, 더 알맞은 밀리루틴을 추천해드려요!
+          {isLogin ? `${user?.nickname}님이 좋아할 만한 밀리루틴을 모아봤어요 😀` : '회원가입을 하시면, 더 알맞은 밀리루틴을 추천해드려요!'}
         </div>
 
         {/* <div className="container max-w-screen-lg flex flex-row items-center my-4">
