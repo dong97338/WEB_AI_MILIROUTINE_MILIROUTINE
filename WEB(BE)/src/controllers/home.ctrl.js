@@ -2,6 +2,7 @@ const jwt = require('../token/jwt');
 const data = require('../models/index');
 const popular = require('./popular.ctrl');
 const {PythonShell} = require('python-shell');
+const http = require('http');
 
 const NUMOFRECOMMEND = 10;
 const NUMOFJOINED = 4;
@@ -31,21 +32,20 @@ const ai = {
 	recommendRoutine : (userNo, res) => {
 		return new Promise((resolve, reject) => {
 			var options = {
-				mode: 'text',
-				pythonOptions : ['-u'],
-				scriptPath: '../AI',
-				args : [userNo, NUMOFRECOMMEND]
+				host:'20.214.203.40',
+				port:'8080',
+				path:'/?no='+userNo+''
 			}
 			
-			// 경로의 기준이 WEB(BE) 폴더
-			PythonShell.run('r12n.py',options, async function(err, data){
-				if(err){
-					return res.status(400).json({
-						success : false,
-						err : String(err)
-					})
-				}
-				resolve(data.toString());
+			var req = http.get(options, function(res){
+				var resData=''
+				res.on('data', function(chunk){
+					resData += chunk;
+				});
+				
+				res.on('end', function(){
+					resolve(resData);
+				})
 			})
 		})
 	},
@@ -53,20 +53,20 @@ const ai = {
 	recommendRefresh : (userNo, refreshNum, res) => {
 		return new Promise((resolve, reject) => {
 			var options = {
-				mode: 'text',
-				pythonOptions : ['-u'],
-				scriptPath: '../AI',
-				args : [userNo, NUMOFRECOMMEND, refreshNum]
+				host:'20.214.203.40',
+				port:'8080',
+				path:'/?no='+userNo+'&refresh='+refreshNum+''
 			}
 			
-			PythonShell.run('r12n2.py',options, async function(err, data){
-				if(err){
-					return res.status(400).json({
-						success : false,
-						err : String(err)
-					})
-				}
-				resolve(data.toString());
+			var req = http.get(options, function(res){
+				var resData=''
+				res.on('data', function(chunk){
+					resData += chunk;
+				});
+				
+				res.on('end', function(){
+					resolve(resData);
+				})
 			})
 		})
 	}
@@ -137,11 +137,12 @@ const output = {
 			var recommendNo = await ai.recommendRefresh(decoded.no, req.query.refresh, res);
 		}
 		
-		recommendNo = recommendNo.substr(1, recommendNo.length-2);
+		recommendNo = recommendNo.substr(1, recommendNo.length-3);
 		recommendNo = recommendNo.split(",");
 
 		for(var i=0; i<recommendNo.length; ++i){
 			recommendNo[i] = Number(recommendNo[i]);
+
 		}
 
 		var recommendRoutine = [];
