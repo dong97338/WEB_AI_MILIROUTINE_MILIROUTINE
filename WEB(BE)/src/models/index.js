@@ -150,6 +150,17 @@ const user_routine = {
       });
     });
   },
+	
+  getMyRoutine: async (id, host) => {
+    return new Promise(function (resolve, reject) {
+      db.query("SELECT * FROM user_routine WHERE routine_id = ? AND user_no = ? AND type = 'join'", [id, host],  function (err, rows, fields) {
+        if (err) {
+          throw new Error(err);
+        }
+        resolve(rows);
+      });
+    });
+  },
 
   getAll: async () => {
     return new Promise(function (resolve, reject) {
