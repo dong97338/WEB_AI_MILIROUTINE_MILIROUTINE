@@ -15,4 +15,3 @@ def r12n2(i, n, r):  # i번 유저에게 루틴 n개 추천(r번 새로고침)
 if __name__ == '__main__':
     r12n2(sys.argv[1], sys.argv[2], sys.argv[3])
 
-# print(r12n2(11,10,0))
