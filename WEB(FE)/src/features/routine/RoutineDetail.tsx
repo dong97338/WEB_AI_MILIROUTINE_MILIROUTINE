@@ -14,7 +14,7 @@ const fetchRoutine = async (routineId: number) => {
 
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
-interface RoutineProps {
+export interface RoutineProps {
   id: number;
   host: number;
   name: string;

@@ -115,17 +115,17 @@ const routine = {
       }
     );
   },
-	
+
   getRandom: async (routineNum) => {
     return new Promise(function (resolve, reject) {
-      db.query('SELECT * FROM routine ORDER BY RAND() LIMIT '+routineNum+'', function (err, rows, fields) {
+      db.query('SELECT * FROM routine ORDER BY RAND() LIMIT ' + routineNum + '', function (err, rows, fields) {
         if (err) {
           throw new Error(err);
         }
         resolve(rows);
       });
     });
-  }
+  },
 };
 
 const user_routine = {
@@ -150,15 +150,19 @@ const user_routine = {
       });
     });
   },
-	
+
   getMyRoutine: async (id, host) => {
     return new Promise(function (resolve, reject) {
-      db.query("SELECT * FROM user_routine WHERE routine_id = ? AND user_no = ? AND type = 'join'", [id, host],  function (err, rows, fields) {
-        if (err) {
-          throw new Error(err);
+      db.query(
+        "SELECT * FROM user_routine WHERE routine_id = ? AND user_no = ? AND type = 'join'",
+        [id, host],
+        function (err, rows, fields) {
+          if (err) {
+            throw new Error(err);
+          }
+          resolve(rows);
         }
-        resolve(rows);
-      });
+      );
     });
   },
 
@@ -201,8 +205,8 @@ const auth = {
       }
     });
   },
-	
-  getOrderByDate : async (item, val, limitNum) => {
+
+  getOrderByDate: async (item, val, limitNum) => {
     return new Promise(function (resolve, reject) {
       db.query('SELECT * FROM auth WHERE ' + item + ' = ? ORDER BY date LIMIT ' + limitNum + '', val, function (err, rows, fields) {
         if (err) {

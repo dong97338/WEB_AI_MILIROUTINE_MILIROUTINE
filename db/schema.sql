@@ -8,8 +8,8 @@ CREATE TABLE user (
     salt VARCHAR(128) NOT NULL,
     email VARCHAR(60) NOT NULL,
     nickname VARCHAR(30) NOT NULL,
-    profile_img VARCHAR(300),
-    background_img VARCHAR(300),
+    profile_img VARCHAR(300) DEFAULT 'default_profile.png',
+    background_img VARCHAR(300) DEFAULT 'default_background.jpeg',
     point INT UNSIGNED DEFAULT 0,
     exp INT UNSIGNED DEFAULT 0,
     PRIMARY KEY (no)
