@@ -1,5 +1,10 @@
 import { RoutineBlock } from '@/components/Element/RoutineBlock';
-import { useState } from 'react';
+import { RoutineProps } from '@/features/routine/RoutineDetail';
+import addImageServerPrefix from '@/utils/addImageServerPrefix';
+import { SERVER_URL } from '@/utils/globalVariables';
+import storage from '@/utils/storage';
+import translateCategory from '@/utils/translateCategory';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface MyContentProps {
@@ -7,19 +12,41 @@ interface MyContentProps {
 }
 
 const MyRoutine = () => {
-  let routines = [<RoutineBlock />, <RoutineBlock />, <RoutineBlock />];
+  const [routines, setRoutines] = useState<RoutineProps[]>([]);
 
-  // 서버에서 받아오는 루틴들을 담았다고 가정한 배열
+  useEffect(() => {
+    const fetchMyRoutine = async () => {
+      const url: string = SERVER_URL + '/user/my';
+      if (!storage.getToken()) {
+        throw new Error('비회원 유저는 나의 밀리루틴을 볼 수 없습니다');
+      }
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${storage.getToken()}`,
+        },
+      });
+      const json = await response.json();
+      return json.routine;
+    };
+    fetchMyRoutine().then(setRoutines);
+  }, []);
 
   return (
     <div className="mb-40">
-      {routines.map((routine, idx) => {
-        return (
-          <div className="mb-4" key={idx}>
-            {routine}
-          </div>
-        );
-      })}
+      {routines.map((routine, idx) => (
+        <RoutineBlock
+          key={idx}
+          id={routine.id}
+          host={routine.hostName}
+          name={routine.name}
+          thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
+          category={translateCategory(routine.category)}
+          auth_cycle={routine.auth_cycle}
+          percentage={77}
+          start_date={new Date(String(routine.start_date))}
+          auth_start={new Date(String(routine.start_date)) < new Date()}
+        />
+      ))}
     </div>
   );
 };
