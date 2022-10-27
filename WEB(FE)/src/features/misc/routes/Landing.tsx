@@ -11,6 +11,7 @@ export const LandingPage = () => {
   //  const [activeTab, setTab] = useState<string>();
   const [recommendRoutines, setRecommendRoutines] = useState<any[]>([]);
   const [popularRoutines, setPopularRoutines] = useState<any[]>([]);
+  const [refresh, setRefresh] = useState<number>(0);
 
   useEffect(() => {
     const fetchRecommendRoutines = async () => {
@@ -29,6 +30,25 @@ export const LandingPage = () => {
     fetchRankedRoutine(1, 10).then(setPopularRoutines);
   }, []);
 
+  useEffect(() => {
+    const fetchRecommendRefreshRoutines = async () => {
+      if (!refresh) {
+        return;
+      }
+      const url: string = SERVER_URL + `/?refresh=${refresh}`;
+      const response = storage.getToken()
+        ? await fetch(url, {
+            headers: {
+              Authorization: `token ${storage.getToken()}`,
+            },
+          })
+        : await fetch(url);
+      const json = await response.json();
+      return json.recommendRoutine;
+    };
+    fetchRecommendRefreshRoutines().then(setRecommendRoutines);
+  }, [refresh]);
+
   //  const onSelectedTab = useCallback((value: string) => setTab(value), []);
 
   return (
@@ -38,7 +58,11 @@ export const LandingPage = () => {
       <section className="w-screen flex flex-col items-center justify-center my-24">
         <div className="container max-w-screen-lg flex flex-row items-center">
           <h2 className="text-black text-2xl font-bold">AI 추천 밀리루틴</h2>
-          <button className="text-sm text-gray-500 py-2 px-6 cursor-pointer">
+          <button
+            className="text-sm text-gray-500 py-2 px-6 cursor-pointer"
+            onClick={() => {
+              setRefresh((cur) => cur + 1);
+            }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -68,26 +92,6 @@ export const LandingPage = () => {
               {
                 label: '학습',
                 value: 'a',
-                ref: useRef(),
-              },
-              {
-                label: '운동',
-                value: 'b',
-                ref: useRef(),
-              },
-              {
-                label: '모닝루틴',
-                value: 'c',
-                ref: useRef(),
-              },
-              {
-                label: '경제',
-                value: 'd',
-                ref: useRef(),
-              },
-              {
-                label: '자기관리',
-                value: 'e',
                 ref: useRef(),
               },
             ]}
