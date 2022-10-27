@@ -65,7 +65,7 @@ const output = {
 		    category : categories
 		})
 	},
-	
+
 	mine : async (req, res)=>{
 		const decoded = token.decode(req, res);
 		const host = decoded.no;
@@ -110,9 +110,21 @@ const output = {
 	},
 	
 	auth : async (req, res) => {
-		const routine = await data.routine.get('id', req.params.routineId);
-		const userInfo = await data.user.get('no', routine[0].host);
-		routine[0].hostName = userInfo[0].nickname;
+		const decoded = token.decode(req, res);
+		const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
+		
+		var routine;
+		
+		console.log(myRoutine);
+		
+		if(myRoutine[0]){
+			routine = await data.routine.get('id', req.params.routineId);
+			const userInfo = await data.user.get('no', routine[0].host);
+			routine[0].hostName = userInfo[0].nickname;
+		}
+		else{
+			routine = []
+		}
 		
 		res.json({
 			success : true,
