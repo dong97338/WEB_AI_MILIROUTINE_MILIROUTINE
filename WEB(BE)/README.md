@@ -364,13 +364,13 @@ INSERT INTO level_exp
 
 ### **루틴 관련**
 
-#### 1. **`GET /popular?from=''&to=''` : 인기 밀리루틴 정보**
+#### 1. **`GET /popular?from=1&to=10` : 인기 밀리루틴 정보**
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
   | success | true | |
-  | rankedRoutine | array of array | from에서 to랭크 까지의 루틴 정보 |
+  | rankedRoutine | array of array | from ~ to 위의 루틴 정보 |
 
 #### 2. **`POST /routine/make` : 밀리루틴 개설하기**
 
@@ -459,8 +459,6 @@ INSERT INTO level_exp
   | success | true | |
   | auth_list | array of object | 지금까지의 인증 정보 |
 
-> // auth_list를 넣는 방향으로 수정해야 할듯
-
 #### 2. **`POST /user/routine/:routineId/auth` : 루틴 인증하기**
 
 - Request Headers
@@ -496,7 +494,7 @@ INSERT INTO level_exp
   | --- | ---------- | ---- |
   | success | true | |
   | userPoint | integer | |
-  | goods | array of object | `goods` 테이블 전체 정보 (id, name, description, thubnail_img,price)|
+  | goods | array of object | `goods` 테이블 전체 정보 |
 
 #### 2. **`POST /user/pointshop` : 포인트샵 품목 구입**
 

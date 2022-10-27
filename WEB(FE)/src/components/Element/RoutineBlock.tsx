@@ -55,17 +55,33 @@ export const RoutineBlock = ({
           </div>
         </div>
         <div className="flex flex-col items-center ml-20">
-          <div className="flex flex-col items-center bg-[#FFF] w-36 h-36 rounded-full justify-center">
-            <p className="text-2xl font-bold">{percentage}%</p>
-          </div>
+          {auth_start ? (
+            <div className={`flex flex-col items-center bg-[#FFF] w-36 h-36 rounded-full justify-center`}>
+              <p className="text-2xl font-bold">{percentage}%</p>
+            </div>
+          ) : (
+            <div className={`flex flex-col items-center bg-white-200 w-36 h-36 rounded-full justify-center`}>
+              <p className="text-2xl font-bold text-gray-400">시작 전</p>
+            </div>
+          )}
           <div>
-            <Button
-              label="인증하기"
-              margin="mt-3"
-              onClick={() => {
-                navigate('/user/my/routine/:routineId/auth');
-              }}
-            />
+            {auth_start ? (
+              <Button
+                label="인증하기"
+                margin="mt-3"
+                onClick={() => {
+                  navigate(`/user/my/routine/${id}/auth`);
+                }}
+              />
+            ) : (
+              <Button
+                label="상세보기"
+                margin="mt-3"
+                onClick={() => {
+                  navigate(`/routine/${id}`);
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
