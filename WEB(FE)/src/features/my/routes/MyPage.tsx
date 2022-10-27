@@ -120,7 +120,7 @@ export const MyPage = () => {
         </button>
       </nav>
 
-      <main className="ml-60 mt-10">
+      <main className="ml-20 mt-10">
         <div>
           <MyContent tab={tab} />
         </div>
