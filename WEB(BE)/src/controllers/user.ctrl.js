@@ -28,6 +28,13 @@ const createHashedPasswordWithSalt = (plainPassword, salt) =>
     });
   });
 
+const getParticipationRate = (auth_cycle, duration, auth_count) =>{
+	const totalAuth = auth_cycle * duration;
+	const currentAuth = auth_count;
+	
+	return (currentAuth / totalAuth);
+}
+
 const token = {
   isToken: (req, res) => {
     if (req.headers.authorization && req.headers.authorization.split(' ')[1]) {
@@ -79,6 +86,19 @@ const output = {
         const myRoutine = await data.routine.get('id', routine.routine_id);
         const userInfo = await data.user.get('no', myRoutine[0].host);
         myRoutine[0].hostName = userInfo[0].nickname;
+		const authCount = (await data.auth.getTotalCount(userInfo[0].no, myRoutine[0].id))[0].count
+		
+		var ParticipationRate
+		
+		if(authCount != 0){
+			ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
+		}
+		else{
+			ParticipationRate = 0
+		}
+		  
+		myRoutine[0].participationRate = ParticipationRate
+		
         JoinedRoutine.push(myRoutine[0]);
       }
     }
@@ -115,11 +135,23 @@ const output = {
     const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
 
     var routine;
-
+    const authCount = (await data.auth.getTotalCount(decoded.no, myRoutine[0].id))[0].count
+	
     if (myRoutine[0]) {
-      routine = await data.routine.get('id', req.params.routineId);
-      const userInfo = await data.user.get('no', routine[0].host);
-      routine[0].hostName = userInfo[0].nickname;
+		routine = await data.routine.get('id', req.params.routineId);
+		const userInfo = await data.user.get('no', routine[0].host);
+		routine[0].hostName = userInfo[0].nickname;
+	  
+		var ParticipationRate
+		
+		if(authCount != 0){
+			ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
+		}
+		else{
+			ParticipationRate = 0
+		}
+		  
+		routine[0].participationRate = ParticipationRate
     } else {
       routine = [];
     }

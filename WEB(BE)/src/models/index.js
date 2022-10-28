@@ -220,6 +220,17 @@ const auth = {
       });
     });
   },
+	
+  getTotalCount : async (userNo, routineId) => {
+	  return new Promise(function (resolve, reject) {
+		db.query('SELECT COUNT(*) AS count FROM auth WHERE user_no = ? AND routine_id = ?', [userNo, routineId], function (err, rows, fields) {
+			if (err) {
+			  throw new Error(err);
+			}
+			resolve(rows);
+      	});
+      }); 
+  }
 };
 
 const goods = {
