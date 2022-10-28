@@ -86,7 +86,11 @@ const routine = {
     return new Promise(function (resolve, reject) {
       db.query('SELECT * FROM routine WHERE ' + item + ' = ?', val, function (err, rows, fields) {
         if (err) {
-          throw new Error(err);
+			return res.json({
+			success : false,
+			err : e
+			})
+          throw err;
         }
         resolve(rows);
       });
