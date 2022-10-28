@@ -86,7 +86,14 @@ const routine = {
   output: async (req, res) => {
     const routineId = req.params.routineId;
 
-    const param = await data.routine.get('id', routineId);
+	const param = await data.routine.get('id', routineId);
+
+	if(!param[0]){
+		return res.json({
+			success : false,
+			err : '없는 루틴입니다 루틴 아이디를 다시 입력해주세요'
+		})
+	}
     const routine = param[0];
     routine.hostName = (await data.user.get('no', routine.host))[0].nickname;
     routine.participants = (await data.user_routine.getParticipantsById(routine.id))[0].count;
