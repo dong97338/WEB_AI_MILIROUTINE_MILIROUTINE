@@ -31,8 +31,12 @@ const createHashedPasswordWithSalt = (plainPassword, salt) =>
 const getParticipationRate = (auth_cycle, duration, auth_count) =>{
 	const totalAuth = auth_cycle * duration;
 	const currentAuth = auth_count;
+	var rate = (currentAuth / totalAuth);
+	if(rate > 1){
+		rate = 1;
+	}
 	
-	return (currentAuth / totalAuth);
+	return rate;
 }
 
 const token = {
