@@ -139,6 +139,7 @@ const output = {
     const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
 
     var routine;
+	var authRoutines;
     const authCount = (await data.auth.getTotalCount(decoded.no, myRoutine[0].id))[0].count
 	
     if (myRoutine[0]) {
@@ -147,7 +148,6 @@ const output = {
 		routine[0].hostName = userInfo[0].nickname;
 	  
 		var ParticipationRate
-		
 		if(authCount != 0){
 			ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
 		}
@@ -156,13 +156,20 @@ const output = {
 		}
 		  
 		routine[0].participationRate = ParticipationRate
+		
+		authRoutines = await data.auth.getOrderByDateNoLimit('id', req.params.routineId)
+		
     } else {
-      routine = [];
-    }
+      return res.status(400).json({
+		  success : false,
+		  err : '루틴이 없습니다'
+	  })
+	}
 
     res.json({
       success: true,
       routine: routine[0],
+	  authRoutine : authRoutines
     });
   },
 
