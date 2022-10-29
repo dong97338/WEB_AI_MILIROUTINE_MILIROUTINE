@@ -217,9 +217,9 @@ const auth = {
     });
   },
 	
-  getOrderByDateNoLimit: async (item, val) => {
+  getOrderByDateNoLimit: async (user_no, routine_id) => {
     return new Promise(function (resolve, reject) {
-      db.query('SELECT * FROM auth WHERE ' + item + ' = ? ORDER BY date', val, function (err, rows, fields) {
+      db.query('SELECT * FROM auth WHERE user_no = ? AND routine_id = ? ORDER BY date DESC', [user_no, routine_id], function (err, rows, fields) {
         if (err) {
           throw new Error(err);
         }

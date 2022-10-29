@@ -141,39 +141,38 @@ const output = {
   auth: async (req, res) => {
     const decoded = token.decode(req, res);
     const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
-
+  
     var routine;
 	var authRoutines;
-    const authCount = (await data.auth.getTotalCount(decoded.no, myRoutine[0].id))[0].count
-	
+    const authCount = (await data.auth.getTotalCount(decoded.no, myRoutine[0].routine_id))[0].count
+    
     if (myRoutine[0]) {
-		routine = await data.routine.get('id', req.params.routineId);
-		const userInfo = await data.user.get('no', routine[0].host);
-		routine[0].hostName = userInfo[0].nickname;
-	  
-		var ParticipationRate
-		if(authCount != 0){
-			ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
-		}
-		else{
-			ParticipationRate = 0
-		}
-		  
-		routine[0].participationRate = ParticipationRate
+      routine = await data.routine.get('id', req.params.routineId);
+      const userInfo = await data.user.get('no', routine[0].host);
+      routine[0].hostName = userInfo[0].nickname;
+      
+      var ParticipationRate;
+      if(authCount != 0){
+        ParticipationRate = getParticipationRate(routine[0].auth_cycle, routine[0].duration, authCount);
+      }
+      else{
+        ParticipationRate = 0
+      }
+      routine[0].participationRate = ParticipationRate;
+      
+      authRoutines = await data.auth.getOrderByDateNoLimit(decoded.no, req.params.routineId)
 		
-		authRoutines = await data.auth.getOrderByDateNoLimit('id', req.params.routineId)
-		
-    } else {
-      return res.status(400).json({
-		  success : false,
-		  err : '루틴이 없습니다'
-	  })
-	}
-
+      } else {
+        return res.status(400).json({
+          success : false,
+          err : '루틴이 없습니다'
+      })
+	  }
+    console.log(authRoutines);
     res.json({
       success: true,
       routine: routine[0],
-	  authRoutine : authRoutines
+	    authRoutine : authRoutines
     });
   },
 	
