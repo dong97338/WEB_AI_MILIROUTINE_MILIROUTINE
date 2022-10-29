@@ -1,10 +1,10 @@
 import pymysql
 import a5t  # sql 아이디 비밀번호(코드스페이스에만, 커밋x)
 
-host="52.79.92.84"
-user=a5t.user
-password=a5t.password
-port=53609
+host="database"
+user="miliroutine_developer"
+password="2022MySQL!@"
+port=3306
 database="miliroutine_db"
 use_unicode=True
 charset='utf8'
