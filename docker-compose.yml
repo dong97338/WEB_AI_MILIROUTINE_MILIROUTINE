@@ -12,8 +12,8 @@ services:
     container_name: frontend
     build: ./WEB(FE)
     volumes:
-      - './WEB(FE)/:/app'
-      - '/app/node_modules'
+      - './WEB(FE)/:/app' # 두 폴더가 실시간으로 연동됨
+      - '/app/node_modules' # 여긴 빼고. 여기가 연동되면 node_modules이 다시 지워지니까
     expose:
       - 5173
     networks:
