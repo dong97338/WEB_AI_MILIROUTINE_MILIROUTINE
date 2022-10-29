@@ -6,7 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
-const PORT = 3000;
+const PORT = 8080;
 
 app.use(
     cors({
