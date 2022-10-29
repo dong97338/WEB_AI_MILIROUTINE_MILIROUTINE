@@ -356,6 +356,7 @@ INSERT INTO level_exp
   | key | value 타입 | 설명 |
   | --- | ---------- | ---- |
   | pw | string | 새로운 비밀번호 |
+  | rePw | string | 재입력된 비밀번호 |
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
