@@ -23,19 +23,10 @@ const ModifyUserInfoPage = () => {
         <h2 className="text-black font-bold text-2xl py-6">관심 카테고리 설정</h2>
         <div className="flex flex-col mb-28">
           <div className="flex">
-//            <Category label="학습" />
-//            <Category label="운동" />
-//            <Category label="모닝루틴" />
           </div>
           <div className="flex">
-//            <Category label="경제" />
-//            <Category label="자기관리" />
-//            <Category label="진로" />
           </div>
           <div className="flex">
-//            <Category label="취미" />
-//            <Category label="정서" />
-//            <Category label="건강" />
           </div>
         </div>
       </section>
