@@ -8,13 +8,13 @@ const routine = require("./routine");
 const user = require("./user");
 const popular = require("./popular");
 
-router.get('/', ctrl.output.home);
+router.get('/api/', ctrl.output.home);
 
-router.use('/auth/login', login);
-router.use('/auth/signup', signup);
-router.use('/routine', routine);
-router.use('/user', user);
-router.use('/popular', popular);
+router.use('/api/auth/login', login);
+router.use('/api/auth/signup', signup);
+router.use('/api/routine', routine);
+router.use('/api/user', user);
+router.use('/api/popular', popular);
 
 
 module.exports = router;

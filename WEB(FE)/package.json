@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "proxy": "https://yoopark-solid-space-goggles-q4jxvv74647fx7jj-8080.preview.app.github.dev",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@headlessui/react": "^1.7.3",
