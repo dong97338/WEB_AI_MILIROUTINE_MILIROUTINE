@@ -48,6 +48,7 @@ const token = {
 }
 
 const user = {
+	// @route POST/auth/signup
 	regist : async(req, res) => {
 		if(token.isToken(req, res)){
 			return res.status(400).json({

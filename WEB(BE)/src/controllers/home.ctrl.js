@@ -92,8 +92,15 @@ const token = {
 };
 
 const output = {
+  // @route GET /
   home: async (req, res) => {
-    const userRoutines = await data.user_routine.getAll();
+	const userRoutines = await data.user_routine.getAll();
+	if(userRoutines.length === 0){
+		return res.status(400).json({
+			success : false,
+			err : 'user routine이 없습니다'
+		})
+	}
     const JoinedRoutine = popular.process.sortRank(userRoutines);
 
     // 인기 루틴
@@ -102,7 +109,14 @@ const output = {
     for (var rank = MINRANK; rank <= MAXRANK; ++rank) {
       const routine = await data.routine.get('id', JoinedRoutine[rank - 1][0]);
       routine[0].participants = JoinedRoutine[rank - 1][1];
+		
       const userInfo = await data.user.get('no', routine[0].host);
+	  if(userInfo.length === 0){
+		  return res.status(400).json({
+			success : false,
+			err : '해당 아이디의 host가 없습니다'
+		})
+	  }
       routine[0].hostName = userInfo[0].nickname;
       rankedRoutine.push(routine[0]);
     }

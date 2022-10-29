@@ -64,6 +64,7 @@ const token = {
 };
 
 const output = {
+  // @route GET /user/settings
   setting: async (req, res) => {
     const decoded = token.decode(req, res);
 
@@ -76,7 +77,8 @@ const output = {
       category: categories,
     });
   },
-
+  
+  // @route GET /user/my
   mine: async (req, res) => {
     const decoded = token.decode(req, res);
     const host = decoded.no;
@@ -112,7 +114,8 @@ const output = {
       routine: JoinedRoutine,
     });
   },
-
+  
+  // @route GET /user/my/like
   like: async (req, res) => {
     const decoded = token.decode(req, res);
 
@@ -133,7 +136,8 @@ const output = {
       routine: likeRoutine,
     });
   },
-
+  
+  // @route GET /user/routine/:routineId/auth
   auth: async (req, res) => {
     const decoded = token.decode(req, res);
     const myRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
@@ -172,7 +176,8 @@ const output = {
 	  authRoutine : authRoutines
     });
   },
-
+	
+  // @route GET /user/pointshop
   goods: async (req, res) => {
     const decoded = token.decode(req, res);
 
@@ -190,6 +195,7 @@ const output = {
 };
 
 const user = {
+  // @route POST /user/settings
   setInfo: (req, res) => {
     const decoded = token.decode(req, res);
 
@@ -221,6 +227,7 @@ const user = {
     });
   },
 
+  // @route POST /user/settings/pw
   setPassword: async (req, res) => {
     if (!req.body.pw) {
       return res.status(400).json({
@@ -228,8 +235,22 @@ const user = {
         err: '새로운 비밀번호를 입력해주세요!',
       });
     }
+	  
+	if (!req.body.rePw){
+	  return res.status(400).json({
+        success: false,
+        err: '새로운 비밀번호를 재입력해주세요!',
+      });
+	}
 
     const decoded = token.decode(req, res);
+	  
+	if(req.body.rePw != req.body.pw){
+	  return res.status(400).json({
+        success: false,
+        err: '입력하신 비밀번호와 재입력된 비밀번호가 다릅니다',
+      });
+	}
 
     const originalPw = await createHashedPasswordWithSalt(
       await data.user.get('id', decoded.id)[0].pw,
@@ -256,6 +277,7 @@ const user = {
 };
 
 const routine = {
+  // @route POST /user/routine/:routineId/auth
   auth: (req, res) => {
     const decoded = token.decode(req, res);
 
@@ -307,6 +329,7 @@ const routine = {
 };
 
 const goods = {
+  // @route POST /user/pointshop
   buy: async (req, res) => {
     const decoded = token.decode(req, res);
 
