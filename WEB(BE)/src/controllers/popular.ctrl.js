@@ -39,6 +39,7 @@ const process = {
 };
 
 const output = {
+  // @route GET /popular
   popular: async (req, res) => {
     const from = Number(req.query.from);
     const to = Number(req.query.to);
@@ -70,10 +71,19 @@ const output = {
     for (let rank = from; rank <= to; rank++) {
       const routine = await data.routine.get('id', JoinedRoutine[rank - 1][0]);
       routine[0].participants = JoinedRoutine[rank - 1][1];
+		
       const userInfo = await data.user.get('no', routine[0].host);
+	  if(userInfo.length === 0){
+		  return res.status(400).json({
+			success : false,
+			err : '해당 아이디의 host가 없습니다'
+		})
+	  }
+		
       routine[0].hostName = userInfo[0].nickname;
       rankedRoutine.push(routine[0]);
     }
+	  
     res.json({
       success: true,
       rankedRoutine: rankedRoutine,

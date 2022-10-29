@@ -44,7 +44,8 @@ const user = {
       return false;
     }
   },
-
+  
+  // @route POST /auth/login
   checkUserInfo: async (req, res) => {
     if (!req.body.id) {
       return res.status(400).json({

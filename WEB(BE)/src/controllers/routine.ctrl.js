@@ -26,6 +26,7 @@ const token = {
 };
 
 const routine = {
+  // @route POST /routine/make
   make: async (req, res) => {
     const { name, category, image, auth_cycle, auth_description_list, start_date, duration } = req.body;
 
@@ -82,14 +83,21 @@ const routine = {
       routine: param,
     });
   },
-
+  
+  // @route GET /routine/:routineId
   output: async (req, res) => {
     const routineId = req.params.routineId;
+	if(!routineId){
+		return res.status(400).json({
+			success : false,
+			err : 'routine Id를 입력해주세요'
+		})
+	}
 
 	const param = await data.routine.get('id', routineId);
 
-	if(!param[0]){
-		return res.json({
+	if(param.length === 0){
+		return res.status(400).json({
 			success : false,
 			err : '없는 루틴입니다 루틴 아이디를 다시 입력해주세요'
 		})
@@ -104,6 +112,7 @@ const routine = {
     });
   },
 
+  // @route PPST /routine/:routineId
   join: (req, res) => {
     const decoded = token.decode(req, res);
     try {
@@ -116,7 +125,7 @@ const routine = {
     }
 
     res.json({
-      success: true,
+      success: true
     });
   },
 };
