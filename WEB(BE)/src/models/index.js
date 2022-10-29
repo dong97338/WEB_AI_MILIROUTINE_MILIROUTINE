@@ -206,7 +206,7 @@ const auth = {
     });
   },
 
-  getOrderByDate: async (item, val) => {
+  getOrderByDate: async (item, val, limitNum) => {
     return new Promise(function (resolve, reject) {
       db.query('SELECT * FROM auth WHERE ' + item + ' = ? ORDER BY date LIMIT ' + limitNum + '', val, function (err, rows, fields) {
         if (err) {
@@ -217,7 +217,7 @@ const auth = {
     });
   },
 	
-  getOrderByDateNoLimit: async (item, val, limitNum) => {
+  getOrderByDateNoLimit: async (item, val) => {
     return new Promise(function (resolve, reject) {
       db.query('SELECT * FROM auth WHERE ' + item + ' = ? ORDER BY date', val, function (err, rows, fields) {
         if (err) {

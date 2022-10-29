@@ -34,7 +34,7 @@ const ai = {
         // host:'20.214.203.40',
         // port:'8080',
         host: 'ai',
-        port: '4000',
+        port: '8081',
         path: '/?no=' + userNo + '',
       };
 
@@ -57,7 +57,7 @@ const ai = {
         // host:'20.214.203.40',
         // port:'8080',
         host: 'ai',
-        port: '4000',
+        port: '8081',
         path: '/?no=' + userNo + '&refresh=' + refreshNum + '',
       };
 
