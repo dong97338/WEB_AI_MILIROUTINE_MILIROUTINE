@@ -42,7 +42,7 @@ const MyRoutine = () => {
           thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
           category={translateCategory(routine.category)}
           auth_cycle={routine.auth_cycle}
-          percentage={0}
+          percentage={routine.participationRate}
           start_date={new Date(String(routine.start_date))}
           auth_start={new Date(String(routine.start_date)) < new Date()}
         />
@@ -82,7 +82,7 @@ const FavoriteRoutine = () => {
           thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
           category={translateCategory(routine.category)}
           auth_cycle={routine.auth_cycle}
-          percentage={0}
+          percentage={routine.participationRate}
           start_date={new Date(String(routine.start_date))}
           auth_start={new Date(String(routine.start_date)) < new Date()}
         />

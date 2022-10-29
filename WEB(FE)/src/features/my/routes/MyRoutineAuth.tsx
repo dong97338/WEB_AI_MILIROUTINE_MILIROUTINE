@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 interface AuthProps {
   week?: number;
   day?: number;
-  date?: Date;
+  date?: string; // 변환 필요
   img?: string;
   text?: string;
 }
@@ -22,20 +22,68 @@ interface AuthBlockProps extends AuthProps {
 const AuthBlock = ({
   week = 1,
   day = 2,
-  date = new Date(),
+  date = String(new Date()),
   img = 'default_background.jpeg',
   text = '언제쯤 전역할 수 있을까요?',
   isToday = false,
 }: AuthBlockProps) => {
+  const newDate: Date = new Date(String(date));
+
+  const [imageButtonClicked, setImageButtonClicked] = useState<boolean>();
+  const [descriptionButtonClicked, setDescriptionButtonClicked] = useState<boolean>();
+  const [descriptionUploadButtonClicked, setDescriptionUploadButtonClicked] = useState<boolean>();
+
+
   return (
-    <div className="bg-gray-300 rounded-xl p-4 my-5">
+    <div className="bg-gray-300 rounded-xl px-6 py-4 my-5">
       <div className="flex justify-between">
         <div>
           <p className="text-black text-sm">{!isToday ? `${week}주차 ${day}회차` : `오늘(${week}주차 ${day}회차)`}</p>
           <h4 className="text-black font-bold text-2xl mt-2">
-            {date.getFullYear()}. {date.getMonth() + 1}. {date.getDate()}. ({WEEKDAY[date.getDay()]})
+            {newDate.getFullYear()}. {newDate.getMonth() + 1}. {newDate.getDate()}. ({WEEKDAY[newDate.getDay()]})
           </h4>
         </div>
+        {
+          !isToday ? 
+          <>        
+            <div className="flex flex-col justify-center">
+              <button className="ml-20" onClick={() => setImageButtonClicked((cur) => !cur)}>이미지 보기</button>
+              {imageButtonClicked && img ? 
+                  <div className="absolute bg-white-100 p-5 left-20 rounded-2xl shadow-lg max-md border-2 border-orange">
+                    <img src={addImageServerPrefix(img)} />
+                  </div>
+                : null
+              }
+            </div>
+            <div className="flex flex-col justify-center">
+              <button className="ml-5" onClick={() => setDescriptionButtonClicked((cur) => !cur)}>글 보기</button>
+              {descriptionButtonClicked && text ? 
+                <div className="absolute bg-white-100 p-5 right-20 rounded-2xl shadow-lg max-w-md border-2 border-orange">
+                  <p>{text}</p>
+                </div>
+                : null
+              }
+            </div>
+            <button className="ml-10 mr-5 font-bold text-gray-500" disabled>인증 완료</button>
+          </>
+           : 
+          <>
+            <div className="flex flex-col justify-center">
+              <label htmlFor='file' className="ml-20">이미지 업로드</label>
+              <input type="file" id="file" name="file" className="hidden" multiple />
+            </div>
+            <div className="flex flex-col justify-center">
+              <button className="ml-5" onClick={() => setDescriptionUploadButtonClicked((cur) => !cur)}>글 업로드</button>
+              {descriptionUploadButtonClicked && text ? 
+                <div className="absolute bg-white p-5 right-28 outline-none rounded-2xl shadow-lg w-[300px] h-[600px] border-2 border-orange">
+                  <textarea cols={30} rows={23}></textarea>
+                </div>
+                : null
+              }
+            </div>
+            <Button label="인증하기" margin="ml-10" />
+          </>
+        }
       </div>
     </div>
   );
@@ -58,6 +106,7 @@ export const MyRoutineAuthPage = () => {
     participants: 0,
   });
   const [authList, setAuthList] = useState<AuthProps[]>([]);
+  const [participationRate, setParticipationRate] = useState<number>(0);
 
   useEffect(() => {
     fetchRoutine(Number(routineId)).then(
@@ -105,10 +154,13 @@ export const MyRoutineAuthPage = () => {
         },
       });
       const json = await response.json();
-      console.log(json);
-      return json.auth_list;
+      return [json.routine.participationRate, json.authRoutine];
     };
-    // fetchAuthList().then(setAuthList);
+
+    fetchAuthList().then(([rate, list]) => {
+      setParticipationRate(Number(rate * 100));
+      setAuthList(list);
+   }).then(() => console.log(authList)); // for debug
   }, []);
 
   return (
@@ -130,7 +182,7 @@ export const MyRoutineAuthPage = () => {
 
         <div className="ml-24 justify-center">
           <div className="flex flex-col items-center bg-white-200 w-48 h-48 rounded-full justify-center">
-            <p className="text-black text-3xl font-bold">{0}%</p>
+            <p className="text-black text-3xl font-bold">{participationRate}%</p>
           </div>
         </div>
       </div>
@@ -138,16 +190,10 @@ export const MyRoutineAuthPage = () => {
       <hr className="border-1 w-1/2 mt-16" />
 
       <div className="mt-16 mb-40">
-        {/* <AuthBlock />
+        <AuthBlock key={0} week={1} day={1} isToday={true}/>
         {authList.map((auth, idx) => (
           <AuthBlock key={idx} week={auth.week} day={auth.day} date={auth.date} img={auth.img} text={auth.text} isToday={false} />
-        ))} */}
-        <AuthBlock />
-        <AuthBlock />
-        <AuthBlock />
-        <AuthBlock />
-        <AuthBlock />
-        <AuthBlock />
+        ))}
       </div>
     </div>
   );
