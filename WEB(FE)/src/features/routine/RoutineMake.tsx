@@ -4,23 +4,41 @@ import { Form, Select, DropdownItem, Label, Button } from "@/components/Element"
 
 export const RoutineMakePage = () => {
   const [categories, setCategories] = useState([
-    { label: "학습1", value: "0" },
-    { label: "학습2", value: "1" },
+    { label: "학습", value: "study" },
+    { label: "운동", value: "workout" },
+    { label: "모닝루틴", value: "morningroutine" },
+    { label: "경제", value: "economy" },
+    { label: "셀프케어", value: "selfcare" },
+    { label: "진로", value: "dream" },
+    { label: "취미", value: "hobby" },
+    { label: "정서", value: "emotion" },
+    { label: "건강(식습관)", value: "health" },
   ]);
   const [intervals, setIntervals] = useState([
-    { label: "주기1", value: "0" },
-    { label: "주기2", value: "1" },
+    { label: "매일", value: "7" },
+    { label: "주 6일", value: "6" },
+    { label: "주 5일", value: "5" },
+    { label: "주 4일", value: "4" },
+    { label: "주 3일", value: "3" },
+    { label: "주 2일", value: "2" },
+    { label: "주 1일", value: "1" },
   ]);
   const [periods, setPeriods] = useState([
-    { label: "기간1", value: "0" },
-    { label: "기간2", value: "1" },
+    { label: "1주", value: "1" },
+    { label: "2주", value: "2" },
+    { label: "3주", value: "3" },
+    { label: "4주", value: "4" },
+    { label: "5주", value: "5" },
+    { label: "6주", value: "6" },
+    { label: "7주", value: "7" },
+    { label: "8주", value: "8" },
   ]);
 
   const [title, setTitle] = useState<string | undefined>("");
   const [category, setCategory] = useState<DropdownItem | undefined>();
   const [interval, setInterval] = useState<DropdownItem | undefined>();
   const [period, setPeriod] = useState<DropdownItem | undefined>();
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [authWays, setAuthWays] = useState<String[]>(['']);
   const [tmpInput, setTmpInput] = useState('');
 
@@ -42,7 +60,7 @@ export const RoutineMakePage = () => {
       <div className="container max-w-xs mb-24">
         <Form
           label="밀리루틴 이름"
-          placeholder="10자 이내로 입력해주세요"
+          placeholder="15자 이내로 입력해주세요"
           type="text"
           value={title}
           onChange={onChangeTitle}
@@ -83,7 +101,7 @@ export const RoutineMakePage = () => {
                 type="file"
                 name="ThumbnailUpload"
                 onChange={(e) => {
-                  setUploadedImage((e.target as HTMLElement).files[0]);
+                  // setUploadedImage((e.target as HTMLElement).files[0]); yarn run dev에서는 되는데 yarn build에서 오류 발생하여 제외
                 }}
               />
             </form>
@@ -97,18 +115,24 @@ export const RoutineMakePage = () => {
         <button className="text-sm" onClick={() => {
           setAuthWays(prev => [...prev, tmpInput]);
         }}>단계 추가</button>
+        <button className="text-sm ml-2" onClick={() => {
+          setAuthWays(prev => {
+            const now = [...prev];
+            now.pop();
+            return now;
+          });
+        }}>단계 삭제</button>
       </div>
 
-
-      <div>
+      <div className="w-[500px]">
         {authWays.map((authWay, idx)=>{
           let tmp = idx + 1 + "단계";
 
           return(
-            <div key={idx} className="flex mb-20 ">
+            <div key={idx} className="flex mb-10 ">
               <Label label={tmp} margin="mr-2" />
 
-              <input className="border-x-0 border-t-0 border-b-2 focus:outline-none" onChange={(e)=>{
+              <input className="border-x-0 border-t-0 border-b-2 focus:outline-none w-full max-w-sm" onChange={(e)=>{
                 setTmpInput(e.target.value);
                 let cpyAuthWay = [...authWays];
                 cpyAuthWay[idx] = tmpInput;
@@ -132,7 +156,8 @@ export const RoutineMakePage = () => {
 
       <Button label="개설 신청하기" margin="mb-20" text="text-xl" onClick={() => {
         // 개설 신청
-        console.log(authWays);
+        alert('개설 신청이 완료되었습니다.')
+        
       }} />
     </div>
 
