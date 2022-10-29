@@ -65,13 +65,15 @@ SECRET_KEY=routine1234
    - `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = '/api'`로 변경해주십시오. (이게 기본 상태임)
 
 
-3. 빌드
+3. 빌드 및 실행
 ```shell
 $ docker-compose up -d
 ```
 
 >  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
 
+> Codespace에서 빌드 및 실행하는 경우 : 8080번 포트를 'public'으로 바꾸어주십시오. 
+![코드스페이스 포트 설정](assets/codespace-port-setting.PNG)
 
 ## ✔️ **Getting Started | 튜토리얼**
 

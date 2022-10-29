@@ -224,22 +224,22 @@ INSERT INTO level_exp
 
 | Method & Path                      | 설명                   | 메소드 경로                          |
 | ---------------------------------- | ---------------------- | ------------------------------------ |
-| GET /                              | 현재 사용자 정보       | home.ctrl → output.home              |
-| POST /auth/login                   | 로그인                 | login.ctrl → user.checkUserInfo      |
-| POST /auth/signup                  | 회원가입               | signup.ctrl → user.regist            |
-| GET /popular                       | 인기 밀리루틴 정보     | popular.ctrl → routine.outputPopular |
-| POST /routine/make                 | 밀리루틴 개설하기      | routine.ctrl → routine.make          |
-| GET /routine/:routineId            | 루틴 상세 정보         | routine.ctrl → routine.output        |
-| POST /routine/:routineId           | 루틴 참여하기          | routine.ctrl → routine.join          |
-| GET /user/my                       | 나의 밀리루틴 정보     | user.ctrl → output.mine              |
-| GET /user/my/like                  | 좋아요한 밀리루틴 정보 | user.ctrl → output.like              |
-| GET /user/routine/:routineId/auth  | 루틴 인증 정보         | user.ctrl → output.auth              |
-| POST /user/routine/:routineId/auth | 루틴 인증하기          | user.ctrl → routine.auth             |
-| GET /user/settings                 | 회원정보               | user.ctrl → output.setting           |
-| POST /user/settings                | 회원정보 수정          | user.ctrl → user.setInfo             |
-| POST /user/settings/pw             | 비밀번호 변경          | user.ctrl → user.setPassword         |
-| GET /user/pointshop                | 포인트샵 품목 정보     | user.ctrl → output.goods             |
-| POST /user/pointshop               | 포인트샵 품목 구입     | user.ctrl → goods.buy                |
+| GET /api/                              | 현재 사용자 정보       | home.ctrl → output.home              |
+| POST /api/auth/login                   | 로그인                 | login.ctrl → user.checkUserInfo      |
+| POST /api/auth/signup                  | 회원가입               | signup.ctrl → user.regist            |
+| GET /api/popular                       | 인기 밀리루틴 정보     | popular.ctrl → routine.outputPopular |
+| POST /api/routine/make                 | 밀리루틴 개설하기      | routine.ctrl → routine.make          |
+| GET /api/routine/:routineId            | 루틴 상세 정보         | routine.ctrl → routine.output        |
+| POST /api/routine/:routineId           | 루틴 참여하기          | routine.ctrl → routine.join          |
+| GET /api/user/my                       | 나의 밀리루틴 정보     | user.ctrl → output.mine              |
+| GET /api/user/my/like                  | 좋아요한 밀리루틴 정보 | user.ctrl → output.like              |
+| GET /api/user/routine/:routineId/auth  | 루틴 인증 정보         | user.ctrl → output.auth              |
+| POST /api/user/routine/:routineId/auth | 루틴 인증하기          | user.ctrl → routine.auth             |
+| GET /api/user/settings                 | 회원정보               | user.ctrl → output.setting           |
+| POST /api/user/settings                | 회원정보 수정          | user.ctrl → user.setInfo             |
+| POST /api/user/settings/pw             | 비밀번호 변경          | user.ctrl → user.setPassword         |
+| GET /api/user/pointshop                | 포인트샵 품목 정보     | user.ctrl → output.goods             |
+| POST /api/user/pointshop               | 포인트샵 품목 구입     | user.ctrl → goods.buy                |
 
 > Request Body와 Response Body는 JSON 형식으로만 구성됩니다.
 
@@ -260,7 +260,7 @@ INSERT INTO level_exp
 
 ### **계정 관련**
 
-#### 1. **`GET /` : 현재 사용자 정보**
+#### 1. **`GET /api/` : 현재 사용자 정보**
 
 - Response Body (200 OK, 비로그인 상태)
   | key | value 타입 | 설명 |
@@ -278,7 +278,7 @@ INSERT INTO level_exp
   | rankedRoutine | array of object | 1~10위 까지의 루틴 정보 |
   | recommendRoutine | array of object | 추천된 10개의 루틴 정보 |
 
-#### 2. **`POST /auth/login` : 로그인**
+#### 2. **`POST /api/auth/login` : 로그인**
 
 - Request Body
   | key | value 타입 | 설명 |
@@ -293,7 +293,7 @@ INSERT INTO level_exp
   | token | string | JWT 토큰 |
   | user | object | 해당 유저의 `user` 테이블 정보 |
 
-#### 3. **`POST /auth/signup` : 회원가입**
+#### 3. **`POST /api/auth/signup` : 회원가입**
 
 - Request Body
   | key | value 타입 | 설명 |
@@ -312,7 +312,7 @@ INSERT INTO level_exp
   | token | string | JWT 토큰 |
   | user | array of object | {id, pw(hashed), email, name, salt} |
 
-#### 4. **`GET /user/settings` : 회원정보 수정**
+#### 4. **`GET /api/user/settings` : 회원정보 수정**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -330,7 +330,7 @@ INSERT INTO level_exp
   | --- | ---------- | ---- |
   | success | true | |
 
-#### 4. **`POST /user/settings` : 회원정보 수정**
+#### 4. **`POST /api/user/settings` : 회원정보 수정**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -345,7 +345,7 @@ INSERT INTO level_exp
   | category | array of object | 로그인된 아이디의 카테고리 정보들 출력 (ex. 아래 코드)|
   `[{ "id": 23, "user_no": 59, "category": "dream" }, { "id": 163, "user_no": 59, "category": "study" }]`
 
-#### 5. **`POST /user/settings/pw` : 비밀번호 변경**
+#### 5. **`POST /api/user/settings/pw` : 비밀번호 변경**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -365,7 +365,7 @@ INSERT INTO level_exp
 
 ### **루틴 관련**
 
-#### 1. **`GET /popular?from=1&to=10` : 인기 밀리루틴 정보**
+#### 1. **`GET /api/popular?from=1&to=10` : 인기 밀리루틴 정보**
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
@@ -373,7 +373,7 @@ INSERT INTO level_exp
   | success | true | |
   | rankedRoutine | array of array | from ~ to 위의 루틴 정보 |
 
-#### 2. **`POST /routine/make` : 밀리루틴 개설하기**
+#### 2. **`POST /api/routine/make` : 밀리루틴 개설하기**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -398,7 +398,7 @@ INSERT INTO level_exp
   | success | true | |
   | routine | object | 해당 루틴의 `routine` 테이블 정보 |
 
-#### 3. **`GET /routine/:routineId` : 루틴 상세 정보**
+#### 3. **`GET /api/routine/:routineId` : 루틴 상세 정보**
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
@@ -407,7 +407,7 @@ INSERT INTO level_exp
   | routine_id | integer | 루틴 고유번호 |
   | routine | object | 해당 루틴의 `routine` 테이블 정보 |
 
-#### 4. **`POST /routine/:routineId` : 루틴 참여하기**
+#### 4. **`POST /api/routine/:routineId` : 루틴 참여하기**
 
 - Response Body (200 OK)
   | key | value 타입 | 설명 |
@@ -419,7 +419,7 @@ INSERT INTO level_exp
   | success | false | |
   | err | string | 에러 메시지 |
 
-#### 5. **`GET /user/my` : 나의 밀리루틴 정보**
+#### 5. **`GET /api/user/my` : 나의 밀리루틴 정보**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -432,7 +432,7 @@ INSERT INTO level_exp
   | success | true | |
   | routine | object 배열 | 참여한 루틴의 `routine` 테이블 정보 + 호스트명 |
 
-#### 6. **`GET /user/my/like` : 좋아요한 밀리루틴 정보**
+#### 6. **`GET /api/user/my/like` : 좋아요한 밀리루틴 정보**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -447,7 +447,7 @@ INSERT INTO level_exp
 
 ### **인증 관련**
 
-#### 1. **`GET /user/routine/:routineId/auth` : 루틴 인증 정보**
+#### 1. **`GET /api/user/routine/:routineId/auth` : 루틴 인증 정보**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -460,7 +460,7 @@ INSERT INTO level_exp
   | success | true | |
   | auth_list | array of object | 지금까지의 인증 정보 |
 
-#### 2. **`POST /user/routine/:routineId/auth` : 루틴 인증하기**
+#### 2. **`POST /api/user/routine/:routineId/auth` : 루틴 인증하기**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -483,7 +483,7 @@ INSERT INTO level_exp
 
 ### **포인트샵 관련**
 
-#### 1. **`GET /user/pointshop` : 포인트샵 품목 정보**
+#### 1. **`GET /api/user/pointshop` : 포인트샵 품목 정보**
 
 - Request Headers
   | header | value 타입 | 설명 |
@@ -497,7 +497,7 @@ INSERT INTO level_exp
   | userPoint | integer | |
   | goods | array of object | `goods` 테이블 전체 정보 |
 
-#### 2. **`POST /user/pointshop` : 포인트샵 품목 구입**
+#### 2. **`POST /api/user/pointshop` : 포인트샵 품목 구입**
 
 - Request Headers
   | header | value 타입 | 설명 |
