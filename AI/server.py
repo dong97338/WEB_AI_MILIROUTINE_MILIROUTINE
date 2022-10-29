@@ -1,6 +1,5 @@
 from flask import Flask, request
 
-from r12n import r12n
 from r12n2 import r12n2
 
 app = Flask(__name__)
@@ -12,7 +11,7 @@ def main():
     count = request.args.get('count', 10, int)
     refresh = request.args.get('refresh', 0, int)
     if not refresh:
-        return r12n(no, count)
+        return r12n2(no, count, 0)
     return r12n2(no, count, refresh)
 
 

@@ -43,13 +43,13 @@ const output = {
     const from = Number(req.query.from);
     const to = Number(req.query.to);
 
-    if (!from) {
+    if (!from || from < 1) {
       return res.status(400).json({
         success: false,
         err: 'from query를 입력해주세요',
       });
     }
-    if (!to) {
+    if (!to || to <from) {
       return res.status(400).json({
         success: false,
         err: 'to query를 입력해주세요',

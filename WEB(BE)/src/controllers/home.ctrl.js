@@ -1,7 +1,6 @@
 const jwt = require('../token/jwt');
 const data = require('../models/index');
 const popular = require('./popular.ctrl');
-const { PythonShell } = require('python-shell');
 const http = require('http');
 
 const NUMOFRECOMMEND = 10;
