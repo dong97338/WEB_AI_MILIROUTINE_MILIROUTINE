@@ -14,7 +14,7 @@ const db = mysql.createConnection({
   password: '2022MySQL!@',
   port: 3306,
   database: 'miliroutine_db',
-  charset: 'utf8mb4_general_ci',
+  charset: 'UTF8MB4_GENERAL_CI',
 });
 
 db.connect();
