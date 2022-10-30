@@ -53,6 +53,7 @@ $
 <br/>
 - 중심단어에 해당하는 원 핫 벡터와 임베딩 벡터를 곱해 중심단어에 해당하는 워드 벡터를 계산
 <br/>
+
 ![워드1](https://user-images.githubusercontent.com/32699584/198874553-f4ff59fa-c7be-4294-aa9b-51657b22e5e6.png)
 <br/>
 ### Pre-trianed word vector: Negative sampling
@@ -61,9 +62,12 @@ $
 <br/>
 - 예측 값과 실제 값의 차이로 계산한 손실함수 값을 최소화
 <br/>
+
 ![워드2](https://user-images.githubusercontent.com/32699584/198874776-e1978d34-c308-4a8b-9160-070901bc3eff.png)
 <br/>
 ### 루틴 벡터와 유저 벡터 계산
 <br/>
+
 ![루벡](https://user-images.githubusercontent.com/32699584/198874778-3181e4ad-7b59-472e-afd2-cfcc6e800f58.png)
+
 ![유벡](https://user-images.githubusercontent.com/32699584/198874779-62a385e3-a63e-40e2-b114-6a57ca07893f.png)
