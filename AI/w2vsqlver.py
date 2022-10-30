@@ -1,9 +1,7 @@
-import torch
 import krpre  # 한글 전처리
 from konlpy.tag import Komoran  # 형태소 분석
 import gensim
 import consql as cs
-from cfg import open
 
 
 model = gensim.models.Word2Vec.load('./AI/ko.bin')
@@ -13,32 +11,32 @@ komoran=krpre.komoran()
 stopword=krpre.Stopword()
 
 n=0
-# with open('./AI/r5e_name.txt')as f:
-routine=cs.ex('SELECT name FROM routine;')  # 서버에서 루틴 이름 가져오기
-routine=[r[0] for r in routine]
-for r in routine:
-	r = krpre.Clean_text(r)
-	r = komoran.nouns(r, 0)
-	r = stopword.Remove(r)
+with cs.ex() as ce:
+	routine=ce.q('SELECT name FROM routine;')  # 서버에서 루틴 이름 가져오기
+	routine=[r[0] for r in routine]
+	for r in routine:
+		r = krpre.Clean_text(r)
+		r = komoran.nouns(r, 0)
+		r = stopword.Remove(r)
 	print(r)
 	for w in r:
 		if w in model.wv.vocab:
 			print('true')
 		else:
 			print('false')
-	n+=1
-	if(n>=50):
-		break
+		n+=1
+		if(n>=50):
+			break
 	# for line in f:
 
-routine=[stopword.Remove(komoran.nouns(krpre.Clean_text(r),0))for r in routine]
-print(routine)
-model.build_vocab(routine, update=True)
-	
-model.train(routine,total_examples=model.corpus_count,epochs=model.iter)
+	routine=[stopword.Remove(komoran.nouns(krpre.Clean_text(r),0))for r in routine]
+	print(routine)
+	model.build_vocab(routine, update=True)
 
-model.save('./AI/kosql.bin')
-model=gensim.models.Word2Vec.load('./AI/kosql.bin')
+	model.train(routine,total_examples=model.corpus_count,epochs=model.iter)
+
+	model.save('./AI/kosql.bin')
+	model=gensim.models.Word2Vec.load('./AI/kosql.bin')
 
 for r in routine:
 	print(r)
@@ -47,6 +45,6 @@ for r in routine:
 			print('true')
 		else:
 			print('false')
-	n+=1
-	if(n>=50):
-		break
+		n+=1
+		if(n>=50):
+			break
