@@ -210,7 +210,7 @@ const output = {
     const userInfo = await data.user.get('id', decoded.id);
 
     // 추천 routine
-	const recommendRoutine = await routine.getRecommendRoutine(req, res, req.query.refresh, decoded.no);
+	const recommendRoutine = await routine.getRecommendRoutine(res, req.query.refresh, decoded.no);
    
 	// 참여한 루틴
     const currentRoutines = await routine.getCurrentRoutine(decoded.no);
