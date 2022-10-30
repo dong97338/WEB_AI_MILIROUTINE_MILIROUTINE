@@ -18,8 +18,6 @@ routine=cs.ex('SELECT name FROM routine;')  # 서버에서 루틴 이름 가져�
 routine=[r[0] for r in routine]
 for r in routine:
 	r = krpre.Clean_text(r)
-	# r = spacing(r)
-	# r = spell_checker.check(r).checked
 	r = komoran.nouns(r, 0)
 	r = stopword.Remove(r)
 	print(r)
@@ -35,15 +33,9 @@ for r in routine:
 
 routine=[stopword.Remove(komoran.nouns(krpre.Clean_text(r),0))for r in routine]
 print(routine)
-# line = krpre.Clean_text(line)
-# line = komoran.nouns(line, 0)
-# line = stopword.Remove(line)
-model.build_vocab(routine, update=True)\
+model.build_vocab(routine, update=True)
 	
 model.train(routine,total_examples=model.corpus_count,epochs=model.iter)
-# n+=1
-# if(n>=50):
-# 	break
 
 model.save('./AI/kosql.bin')
 model=gensim.models.Word2Vec.load('./AI/kosql.bin')
@@ -58,6 +50,3 @@ for r in routine:
 	n+=1
 	if(n>=50):
 		break
-
-print(model.most_similar('백주'))
-print(len(model.wv.get_vector('백주')))
