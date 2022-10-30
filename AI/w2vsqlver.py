@@ -1,10 +1,11 @@
+import os
 import krpre  # 한글 전처리
 from konlpy.tag import Komoran  # 형태소 분석
 import gensim
 import consql as cs
 
 
-model = gensim.models.Word2Vec.load('./AI/ko.bin')
+model = gensim.models.Word2Vec.load(os.path.join(os.path.dirname(__file__),'ko.bin'))
 model.min_count=1  # 단어 하나만 있어도 훈련
 komoran=krpre.komoran()
 
@@ -35,8 +36,8 @@ with cs.ex() as ce:
 
 	model.train(routine,total_examples=model.corpus_count,epochs=model.iter)
 
-	model.save('./AI/kosql.bin')
-	model=gensim.models.Word2Vec.load('./AI/kosql.bin')
+	model.save(os.path.join(os.path.dirname(__file__),'kosql.bin'))
+	model=gensim.models.Word2Vec.load(os.path.join(os.path.dirname(__file__),'kosql.bin'))
 
 for r in routine:
 	print(r)

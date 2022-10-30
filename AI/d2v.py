@@ -1,3 +1,4 @@
+import os
 import torch
 import gensim
 import krpre
@@ -6,7 +7,7 @@ import consql as cs
 komoran=krpre.komoran()
 stopword=krpre.Stopword()
 
-model=gensim.models.Word2Vec.load('./AI/kosql.bin')
+model=gensim.models.Word2Vec.load(os.path.join(os.path.dirname(__file__),'kosql.bin'))
 with cs.ex() as ce:
 	routine=ce.q('SELECT name FROM routine;')
 	routine=[r[0] for r in routine]  # ((ㅁ,),(ㅎ,),....)
@@ -17,7 +18,7 @@ with cs.ex() as ce:
 	tensor=torch.stack([torch.mean(torch.tensor([model.wv.get_vector(w)for w in r]),0) if r!=[] else torch.rand(200) for r in routine],0)  # 
 
 	print(type(tensor))
-	torch.save(torch.FloatTensor(tensor),'./AI/d2v_tensor.pt')
+	torch.save(torch.FloatTensor(tensor),os.path.join(os.path.dirname(__file__),'d2v_tensor.pt'))
 
-tt=torch.load('./AI/d2v_tensor.pt')
+tt=torch.load(os.path.join(os.path.dirname(__file__),'d2v_tensor.pt'))
 print(tt.size())
