@@ -65,9 +65,21 @@ $
 
 ![워드2](https://user-images.githubusercontent.com/32699584/198874776-e1978d34-c308-4a8b-9160-070901bc3eff.png)
 <br/>
-### 루틴 벡터와 유저 벡터 계산
+### 루틴 임베딩과 유저 임베딩 계산
+<br/>
+- 루틴 임베딩 계산
 <br/>
 
 ![루벡](https://user-images.githubusercontent.com/32699584/198874778-3181e4ad-7b59-472e-afd2-cfcc6e800f58.png)
+<br/>
+- 유저 임베딩 계산
+<br/>
 
 ![유벡](https://user-images.githubusercontent.com/32699584/198874779-62a385e3-a63e-40e2-b114-6a57ca07893f.png)
+
+### 추천 점수 계산
+<br/>
+- 유저 임베딩과 모든 루틴 임베딩 사이의 코사인 유사도를 계산하여 유사도가 높은 순으로 추천
+<br/>
+
+![유사도](https://user-images.githubusercontent.com/32699584/198877409-37195c22-1115-4a96-86f9-13984f1b4a7e.png)
