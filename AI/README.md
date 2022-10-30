@@ -3,6 +3,15 @@
 안녕하세요! 밀리루틴 팀의 AI README입니다.  
 사용자가 좋아할만한 루틴을 추천하는 모델을 제작하고 있어요.
 
+## ☝️ **프로젝트 실행 방법**
+
+```shell
+$ cd AI/
+$ /bin/python3 w2vsqlver.py # OOV(out of vocabulary) 문제 해결을 위해 ko.bin 모델에 루틴 단어 추가 한 kosql.bin 모델 학습
+$ /bin/python3 d2v.py # d2v_tensor.pt에 루틴 벡터 저장
+$ /bin/python3 save_r12n.py 0 301 # 유저 1번부터 301번 유저벡터 r12n.json에 저장
+```
+
 ## 👋 **AI를 만든 사람들**
 
 | 이름   | 역할      | 이메일              | 깃허브 ID                                                                                                                                                           |

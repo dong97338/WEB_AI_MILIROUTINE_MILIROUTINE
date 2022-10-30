@@ -1,6 +1,7 @@
 import os
 import torch
 import json
+import argparse
 import consql as cs
 
 def ex(a,b):  # a보다 크고 b보다 작거나 같은 유저 번호 갱신
@@ -49,16 +50,26 @@ def ex(a,b):  # a보다 크고 b보다 작거나 같은 유저 번호 갱신
                 if c in ret[u]:  # checked에 중복 있음
                     ret[u].remove(c)
             # print(u,ret[u])
-        with open(os.path.join(os.path.dirname(__file__),'r12n.json'),'r+')as f:
+        if not os.path.isfile(fp:=os.path.join(os.path.dirname(__file__),'r12n.json')):
+            with open(fp,'w+')as f:
+                json.dump([],f)
+        with open(fp,'r+')as f:
             tp=json.load(f)
             l=len(tp)
             tp+=[[]for _ in range(b-l+1)]
             for i in range(a+1,b+1):
-                print(ret, i-a)
+                # print(ret, i-a)
                 tp[i]=ret[i-a]
                 # tp[i]=[1]  # 잘 추가되는지
             f.seek(0)
             json.dump(tp,f)
             f.truncate()
 
-# ex(1,303)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Initialize recommendation lists')
+    parser.add_argument('integers', metavar='N', type=int, nargs='+', help='an integer for the accumulator')
+    args = parser.parse_args()
+    a,b=args.integers
+    ex(a,b)
+
+# try 로 r12n.json 파일 만들어서 []초기화해야함

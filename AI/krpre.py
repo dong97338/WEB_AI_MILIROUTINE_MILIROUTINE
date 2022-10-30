@@ -1,7 +1,6 @@
-import torch
+import os
 import re
 import emoji  # 이모티콘 제거
-import cleantext
 from konlpy.tag import Komoran
 
 '''
@@ -52,7 +51,7 @@ class komoran(Komoran):
 
 class Stopword():  # 불용어 제거
 	def __init__(self):
-		with open('./AI/stopwords.txt', encoding='utf8') as f:
+		with open(os.path.join(os.path.dirname(__file__),'stopwords.txt'), encoding='utf8') as f:
 			self.stopword = [w[:-1] for w in f]
 	def Remove(self, text):
 		return [w for w in text if w not in self.stopword]
