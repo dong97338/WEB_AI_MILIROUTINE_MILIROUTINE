@@ -59,7 +59,7 @@ SECRET_KEY=routine1234
 $ docker-compose up -d
 ```
 
-4. 주의사항
+4. 주의사항   
 (1) localhost로 접속이 가능한 경우 : CORS 에러가 발생하지 않습니다.
    -  `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = 'http://localhost:8080/api'`(뒤의 `/` 제거)로 변경해주십시오. 
    -  `WEB(FE)/package.json`에서 "proxy" key를 지워주십시오. 
@@ -76,7 +76,8 @@ $ docker-compose up -d
 
 >  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
 
-> 테스트 계정 ID : `user1` | PW : `test` 
+5. 테스트 계정 ID : `user1`   
+    테스트 계정 PW : `test` 
 
 ## ✔️ **Getting Started | 튜토리얼**
 
