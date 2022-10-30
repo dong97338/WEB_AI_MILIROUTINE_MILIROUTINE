@@ -34,7 +34,7 @@ export const Jumbotron = ({ isLogin = false, currentRoutines = [] }: JumbotronPr
             <div className="flex mt-3">
               {currentRoutines.map((cur, idx) => (
                 <div key={idx} className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3">
-                  <a href={`/routine/${cur.id}`}><img className="w-16 h-16 rounded-xl" src={addImageServerPrefix(cur.thumbnail_img)} /></a>
+                  <a href={`/user/my/routine/${cur.id}/auth`}><img className="w-16 h-16 rounded-xl" src={addImageServerPrefix(cur.thumbnail_img)} /></a>
                 </div>)
               )}
 
