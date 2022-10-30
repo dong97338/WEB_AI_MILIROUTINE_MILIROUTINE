@@ -112,19 +112,27 @@ const user = {
 		
 		data.user.add(param);
 		
-		const jwtToken = jwt.token.create(req, res, id, name);
-		
 		const userInfo = await data.user.get('id', id);
 		const user_no = userInfo[0].no
+		const jwtToken = jwt.token.create(req, res, user_no, userInfo[0].id, userInfo[0].nickname);
 		
-		for(const item of category){
+		try{
+			for(const item of category){
 			data.user_category.add([user_no, item]);
+			}
+
+			for(const routine of likeRoutine){
+				data.user_routine.add([user_no, routine, 'like'])
+			}
+
+		}
+		catch(e){
+			return res.status(400).json({
+				success : false,
+				error : String(e)
+			})
 		}
 		
-		for(const routine of likeRoutine){
-			data.user_routine.add([user_no, routine, 'like'])
-		}
-
 		return res.json({
 			success : true,
 			token : jwtToken,
