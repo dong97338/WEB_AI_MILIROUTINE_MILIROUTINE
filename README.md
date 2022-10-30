@@ -73,6 +73,10 @@ $ docker-compose up -d
 > Codespace에서 빌드 및 실행하는 경우 : 8080번 포트를 'public'으로 바꾸어주십시오. 
 ![코드스페이스 포트 설정](assets/codespace-port-setting.PNG)
 
+> Codespace에서 AI/requiements.txt를 설치할 때, torch의 용량이 너무 커서 에러를 발생시키는 경우가 있습니다.   
+그럴 때는 requirements.txt에서 torch==1.12.1을 주석처리하시고 r12n2.py에서 `except` 를 포함한 아랫부분을 주석처리해주십시오.   
+유저가 많아져 기존 학습 정보로만 추천을 할 수 없는 예외적인 상황에서 torch가 실행되므로 평시의 경우 문제없이 빌드하실 수 있습니다.  
+
 
 >  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
 
