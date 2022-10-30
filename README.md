@@ -60,8 +60,8 @@ SECRET_KEY=routine1234
    -  `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "server" key를 포함한 그 안의 내용을 모두 지워주십시오. 
 
 (2) localhost로 접속이 불가능한 경우 (예> Github Codespace 등에서 접속하여 자동 포트 포워딩이 되는 경우) : CORS 에러가 발생하여 proxy 설정을 해주어야 합니다.
-   - `WEB(FE)/package.json`에서 "proxy" key의 value로 자신의 환경에서 8080번 포트가 포워딩된 링크 + `/api`로 변경해주십시오. 
-   - `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "target" key의 value로 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오.
+   - `WEB(FE)/package.json`에서 "proxy" key의 value로 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오. 
+   - `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "target" key의 value에도 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오.
    - `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = '/api'`로 변경해주십시오. (이게 기본 상태임)
 
 
