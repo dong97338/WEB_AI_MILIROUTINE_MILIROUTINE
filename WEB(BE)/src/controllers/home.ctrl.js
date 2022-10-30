@@ -168,8 +168,23 @@ const output = {
     const authRoutine = await data.auth.getOrderByDate('user_no', decoded.no, NUMOFJOINED);
 
     var currentRoutines = [];
+	var routineIdList = [];
+	var isId;
     for (const item of authRoutine) {
-      const currentRoutine = await data.routine.get('id', authRoutine[0].routine_id);
+	  isId = false;
+	  for(const id of routineIdList){
+		  if(item.routine_id === id){
+			  isId = true;
+			  break;
+		  }
+	  }
+		
+	  if(isId){
+		  continue;
+	  }
+		
+      const currentRoutine = await data.routine.get('id', item.routine_id);
+	  routineIdList.push(item.routine_id);
       currentRoutines.push(currentRoutine[0]);
     }
 
