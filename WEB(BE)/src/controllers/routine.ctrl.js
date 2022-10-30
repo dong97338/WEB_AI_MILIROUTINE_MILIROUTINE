@@ -22,7 +22,7 @@ const token = {
     const jwtToken = req.headers.authorization.split(' ')[1];
     const decoded = jwt.token.decode(jwtToken);
     return decoded;
-  },
+  }
 };
 
 const routine = {
@@ -103,19 +103,54 @@ const routine = {
 			err : '없는 루틴입니다 루틴 아이디를 다시 입력해주세요'
 		})
 	}
+	
     const routine = param[0];
     routine.hostName = (await data.user.get('no', routine.host))[0].nickname;
     routine.participants = (await data.user_routine.getParticipantsById(routine.id))[0].count;
-    res.json({
-      success: true,
-      routine_id: routineId,
-      routine: routine,
-    });
+	  
+	if(!token.isToken(req, res)){
+	  return res.json({
+		  success: true,
+		  routine_id: routineId,
+		  routine: routine,
+      });
+	}
+	
+	const decoded = token.decode(req, res);
+	const userRoutine = await data.user_routine.getMyRoutine(routine.id, decoded.no);
+	  
+	if(userRoutine.length != 0){
+		return res.json({
+			success : true,
+			routine_id : routineId,
+			routine : routine,
+			isJoin : true
+		})
+	}
+	else{
+		return res.json({
+			success : true,
+			routine_id : routineId,
+			routine : routine,
+			isJoin : false
+		})
+	}
+    
   },
 
-  // @route PPST /routine/:routineId
-  join: (req, res) => {
+  // @route POST /routine/:routineId
+  join: async (req, res) => {
     const decoded = token.decode(req, res);
+	  
+	const userRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
+
+	if(userRoutine.length != 0){
+		return res.status(400).json({
+			success : false,
+			err : '이미 참여한 루틴입니다!'
+		})
+	}
+	  
     try {
       data.user_routine.add([decoded.no, req.params.routineId, 'join']);
     } catch (e) {
