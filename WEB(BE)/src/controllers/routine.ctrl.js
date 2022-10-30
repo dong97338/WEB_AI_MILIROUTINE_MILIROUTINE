@@ -138,9 +138,19 @@ const routine = {
     
   },
 
-  // @route PPST /routine/:routineId
+  // @route POST /routine/:routineId
   join: (req, res) => {
     const decoded = token.decode(req, res);
+	  
+	const userRoutine = data.user_routine.getMyRoutine(decoded.no, req.params.routineId);
+	  
+	if(userRoutine.length != 0){
+		return res.status(400).json({
+			success : false,
+			err : '이미 참여한 루틴입니다!'
+		})
+	}
+	  
     try {
       data.user_routine.add([decoded.no, req.params.routineId, 'join']);
     } catch (e) {
