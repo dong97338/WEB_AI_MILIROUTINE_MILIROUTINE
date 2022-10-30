@@ -28,6 +28,7 @@ const token = {
 const routine = {
   // @route POST /routine/make
   make: async (req, res) => {
+	const decoded = token.decode(req, res);
     const { name, category, image, auth_cycle, auth_description_list, start_date, duration } = req.body;
 
     if (!name) {
@@ -67,7 +68,7 @@ const routine = {
       });
     }
 
-    const host = await data.user.get('id', token.decode(req, res).id);
+    const host = await data.user.get('id', decoded.id);
     const auth_description = JSON.stringify(auth_description_list);
 
     const param = [host[0].no, name, category, image, auth_cycle, auth_description, start_date, duration];
