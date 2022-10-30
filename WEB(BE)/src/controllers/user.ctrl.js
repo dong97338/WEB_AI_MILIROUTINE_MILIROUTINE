@@ -90,21 +90,17 @@ const output = {
     for (const routine of routines) {
       if (routine.type == 'join') {
         const myRoutine = await data.routine.get('id', routine.routine_id);
-        const userInfo = await data.user.get('no', myRoutine[0].host);
-        myRoutine[0].hostName = userInfo[0].nickname;
-		const authCount = (await data.auth.getTotalCount(userInfo[0].no, myRoutine[0].id))[0].count
+        const userInfo = await data.user.get('no', decoded.no);
+    		const authCount = (await data.auth.getTotalCount(userInfo[0].no, myRoutine[0].id))[0].count;
 		
-		var ParticipationRate
-		
-		if(authCount != 0){
-			ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
-		}
-		else{
-			ParticipationRate = 0
-		}
-		  
-		myRoutine[0].participationRate = ParticipationRate
-		
+        var ParticipationRate;	
+        if(authCount != 0){
+          ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
+        }
+        else{
+          ParticipationRate = 0;
+        }		  
+        myRoutine[0].participationRate = ParticipationRate;		
         JoinedRoutine.push(myRoutine[0]);
       }
     }

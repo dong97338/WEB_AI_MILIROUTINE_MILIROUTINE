@@ -11,8 +11,12 @@ interface MyContentProps {
   tab: string;
 }
 
+interface RoutinePropsWithParticipationRate extends RoutineProps{
+  participationRate: number;
+}
+
 const MyRoutine = () => {
-  const [routines, setRoutines] = useState<RoutineProps[]>([]);
+  const [routines, setRoutines] = useState<RoutinePropsWithParticipationRate[]>([]);
 
   useEffect(() => {
     const fetchMyRoutine = async () => {
@@ -32,7 +36,7 @@ const MyRoutine = () => {
   }, []);
 
   return (
-    <div className="mb-40">
+    <div className="ml-40 mb-40">
       {routines.map((routine, idx) => (
         <RoutineBlock
           key={idx}
@@ -42,7 +46,7 @@ const MyRoutine = () => {
           thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
           category={translateCategory(routine.category)}
           auth_cycle={routine.auth_cycle}
-          percentage={routine.participationRate}
+          percentage={Number(routine.participationRate * 100)}
           start_date={new Date(String(routine.start_date))}
           auth_start={new Date(String(routine.start_date)) < new Date()}
         />
@@ -52,7 +56,7 @@ const MyRoutine = () => {
 };
 
 const FavoriteRoutine = () => {
-  const [routines, setRoutines] = useState<RoutineProps[]>([]);
+  const [routines, setRoutines] = useState<RoutinePropsWithParticipationRate[]>([]);
 
   useEffect(() => {
     const fetchLikeRoutine = async () => {
@@ -72,7 +76,7 @@ const FavoriteRoutine = () => {
   }, []);
 
   return (
-    <div className="mb-40">
+    <div className="ml-40 mb-40">
       {routines.map((routine, idx) => (
         <RoutineBlock
           key={idx}
@@ -82,7 +86,7 @@ const FavoriteRoutine = () => {
           thumbnail_img={addImageServerPrefix(routine.thumbnail_img)}
           category={translateCategory(routine.category)}
           auth_cycle={routine.auth_cycle}
-          percentage={routine.participationRate}
+          percentage={Number(routine.participationRate * 100)}
           start_date={new Date(String(routine.start_date))}
           auth_start={new Date(String(routine.start_date)) < new Date()}
         />
