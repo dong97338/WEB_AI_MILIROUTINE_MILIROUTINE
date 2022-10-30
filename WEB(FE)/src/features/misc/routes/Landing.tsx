@@ -7,6 +7,7 @@ import addImageServerPrefix from '@/utils/addImageServerPrefix';
 import { SERVER_URL } from '@/utils/globalVariables';
 import storage from '@/utils/storage';
 import { UserProps } from '@/components/Element/Header';
+import { RoutineProps } from '@/features/routine/RoutineDetail';
 
 export const LandingPage = () => {
   //  const [activeTab, setTab] = useState<string>();
@@ -26,6 +27,7 @@ export const LandingPage = () => {
   const [recommendRoutines, setRecommendRoutines] = useState<any[]>([]);
   const [popularRoutines, setPopularRoutines] = useState<any[]>([]);
   const [refresh, setRefresh] = useState<number>(0);
+  const [currentRoutines, setCurrentRoutines] = useState<RoutineProps[]>([]);
 
   useEffect(() => {
     const fetchBasicInfo = async () => {
@@ -38,12 +40,13 @@ export const LandingPage = () => {
           })
         : await fetch(url);
       const json = await response.json();
-      return [json.isLogin, json.user, json.recommendRoutine];
+      return [json.isLogin, json.user, json.recommendRoutine, json.currentRoutine];
     };
-    fetchBasicInfo().then(([a, b, c]) => {
+    fetchBasicInfo().then(([a, b, c, d]) => {
       setIsLogin(a);
       setUser(b);
       setRecommendRoutines(c);
+      setCurrentRoutines(d);
     });
     fetchRankedRoutine(1, 10).then(setPopularRoutines);
   }, []);
@@ -71,7 +74,7 @@ export const LandingPage = () => {
 
   return (
     <MainLayout>
-      <Jumbotron isLogin={isLogin} />
+      <Jumbotron isLogin={isLogin} currentRoutines={currentRoutines} />
 
       <section className="w-screen flex flex-col items-center justify-center my-24">
         <div className="container max-w-screen-lg flex flex-row items-center">

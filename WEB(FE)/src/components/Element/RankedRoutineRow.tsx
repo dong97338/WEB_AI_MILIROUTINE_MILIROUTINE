@@ -26,7 +26,7 @@ export const RankedRoutineRow = ({ from, to }: RankedRoutineRowProps) => {
   return (
     <>
       {routines.length ? (
-        <div className="ml-48 mt-12 max-w-screen-lg">
+        <div className="ml-96 mt-12 max-w-screen-lg">
           <h2 className="text-xl font-bold">
             {from} ~ {to}위
           </h2>

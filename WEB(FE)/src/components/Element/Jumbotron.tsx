@@ -1,12 +1,15 @@
 import { Button } from '@/components/Element';
+import { RoutineProps } from '@/features/routine/RoutineDetail';
+import addImageServerPrefix from '@/utils/addImageServerPrefix';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface JumbotronProps {
   isLogin?: boolean;
+  currentRoutines?: RoutineProps[];
 }
 
-export const Jumbotron = ({ isLogin = false }: JumbotronProps) => {
+export const Jumbotron = ({ isLogin = false, currentRoutines = [] }: JumbotronProps) => {
   const navigate = useNavigate();
 
   const goToSignup = useCallback(() => {
@@ -29,10 +32,16 @@ export const Jumbotron = ({ isLogin = false }: JumbotronProps) => {
           <div className="flex flex-col items-start justify-center flex-1">
             <h4 className="text-black text-lg">현재 참여중인 밀리루틴</h4>
             <div className="flex mt-3">
-              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
-              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
-              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
-              <div className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
+              {currentRoutines.map((cur, idx) => (
+                <div key={idx} className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3">
+                  <a href={`/routine/${cur.id}`}><img className="w-16 h-16 rounded-xl" src={addImageServerPrefix(cur.thumbnail_img)} /></a>
+                </div>)
+              )}
+
+              {[...Array(4 - currentRoutines.length)].map((_, idx) => (
+                <div key={idx} className="w-16 h-16 bg-gray-300 rounded-xl shadow-md mr-3"></div>
+              ))}
+
               <div onClick={goToMyRoutine} className="cursor-pointer text-gray-400 w-16 h-16 rounded-full flex justify-center items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
