@@ -8,9 +8,11 @@ def r12n2(i,n,r):  # i번 유저에게 루틴 n개 추천(r번 새로고침)
         r12n=json.load(f)
         try:
             l=len(r12n[i])
-            return r12n[i][(r*n)%l:][:n]
+            print(ret:=r12n[i][(r*n)%l:][:n])
+            return ret
         except:
-            return r12n[random.randrange(1,301)][:n]
+            print(ret:=r12n[random.randrange(1,301)][:n])
+            return ret
 
 
 if __name__ == '__main__':
