@@ -38,6 +38,29 @@ const process = {
   },
 };
 
+const routine = {
+	getRankedRoutine : async (res, JoinedRoutine, from, to) =>{
+		var rankedRoutine = [];
+		for (let rank = from; rank <= to; rank++) {
+		  const routine = await data.routine.get('id', JoinedRoutine[rank - 1][0]);
+		  routine[0].participants = JoinedRoutine[rank - 1][1];
+
+		  const userInfo = await data.user.get('no', routine[0].host);
+		  if(userInfo.length === 0){
+			  return res.status(400).json({
+				success : false,
+				err : '해당 아이디의 host가 없습니다'
+			})
+		  }
+
+		  routine[0].hostName = userInfo[0].nickname;
+		  rankedRoutine.push(routine[0]);
+		}
+		
+		return rankedRoutine;
+	}
+}
+
 const output = {
   // @route GET /popular
   popular: async (req, res) => {
@@ -67,22 +90,8 @@ const output = {
     }
 
     const JoinedRoutine = process.sortRank(userRoutines);
-    let rankedRoutine = [];
-    for (let rank = from; rank <= to; rank++) {
-      const routine = await data.routine.get('id', JoinedRoutine[rank - 1][0]);
-      routine[0].participants = JoinedRoutine[rank - 1][1];
-		
-      const userInfo = await data.user.get('no', routine[0].host);
-	  if(userInfo.length === 0){
-		  return res.status(400).json({
-			success : false,
-			err : '해당 아이디의 host가 없습니다'
-		})
-	  }
-		
-      routine[0].hostName = userInfo[0].nickname;
-      rankedRoutine.push(routine[0]);
-    }
+	  
+	const rankedRoutine = await routine.getRankedRoutine(res, JoinedRoutine, from, to);
 	  
     res.json({
       success: true,

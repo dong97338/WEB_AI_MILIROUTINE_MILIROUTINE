@@ -29,6 +29,10 @@ const createHashedPasswordWithSalt = (plainPassword, salt) =>
   });
 
 const getParticipationRate = (auth_cycle, duration, auth_count) =>{
+	if(auth_count === 0){
+		return 0;
+	}
+	
 	const totalAuth = auth_cycle * duration;
 	const currentAuth = auth_count;
 	var rate = (currentAuth / totalAuth);
@@ -91,15 +95,10 @@ const output = {
       if (routine.type == 'join') {
         const myRoutine = await data.routine.get('id', routine.routine_id);
         const userInfo = await data.user.get('no', decoded.no);
-    		const authCount = (await data.auth.getTotalCount(userInfo[0].no, myRoutine[0].id))[0].count;
+    	const authCount = (await data.auth.getTotalCount(userInfo[0].no, myRoutine[0].id))[0].count;
 		
-        var ParticipationRate;	
-        if(authCount != 0){
-          ParticipationRate = getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);
-        }
-        else{
-          ParticipationRate = 0;
-        }		  
+        const ParticipationRate =  getParticipationRate(myRoutine[0].auth_cycle, myRoutine[0].duration, authCount);;	
+
         myRoutine[0].participationRate = ParticipationRate;		
         JoinedRoutine.push(myRoutine[0]);
       }
@@ -147,13 +146,7 @@ const output = {
       const userInfo = await data.user.get('no', routine[0].host);
       routine[0].hostName = userInfo[0].nickname;
       
-      var ParticipationRate;
-      if(authCount != 0){
-        ParticipationRate = getParticipationRate(routine[0].auth_cycle, routine[0].duration, authCount);
-      }
-      else{
-        ParticipationRate = 0
-      }
+      const ParticipationRate = getParticipationRate(routine[0].auth_cycle, routine[0].duration, authCount);;
       routine[0].participationRate = ParticipationRate;
       
       authRoutines = await data.auth.getOrderByDateNoLimit(decoded.no, req.params.routineId)
