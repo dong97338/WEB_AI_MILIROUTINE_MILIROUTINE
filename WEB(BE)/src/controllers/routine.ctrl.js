@@ -139,11 +139,11 @@ const routine = {
   },
 
   // @route POST /routine/:routineId
-  join: (req, res) => {
+  join: async (req, res) => {
     const decoded = token.decode(req, res);
 	  
-	const userRoutine = data.user_routine.getMyRoutine(decoded.no, req.params.routineId);
-	  
+	const userRoutine = await data.user_routine.getMyRoutine(req.params.routineId, decoded.no);
+
 	if(userRoutine.length != 0){
 		return res.status(400).json({
 			success : false,
