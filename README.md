@@ -54,26 +54,28 @@ $ cd WEB_AI_MILIROUTINE_MILIROUTINE/
 SECRET_KEY=routine1234
 ```
 
+3. 빌드 및 실행
+```shell
+$ docker-compose up -d
+```
+
+4. 주의사항
 (1) localhost로 접속이 가능한 경우 : CORS 에러가 발생하지 않습니다.
-   -  `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = 'http://localhost:8080/api'`로 변경해주십시오. 
+   -  `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = 'http://localhost:8080/api'`(뒤의 `/` 제거)로 변경해주십시오. 
    -  `WEB(FE)/package.json`에서 "proxy" key를 지워주십시오. 
    -  `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "server" key를 포함한 그 안의 내용을 모두 지워주십시오. 
 
 (2) localhost로 접속이 불가능한 경우 (예> Github Codespace 등에서 접속하여 자동 포트 포워딩이 되는 경우) : CORS 에러가 발생하여 proxy 설정을 해주어야 합니다.
    - `WEB(FE)/package.json`에서 "proxy" key의 value로 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오. 
    - `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "target" key의 value에도 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오.
-   - `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = '/api'`로 변경해주십시오. (이게 기본 상태임)
-
-
-3. 빌드 및 실행
-```shell
-$ docker-compose up -d
-```
-
->  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
+   - `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = '/api'`(뒤의 `/` 제거)로 변경해주십시오. (이게 기본 상태임)
 
 > Codespace에서 빌드 및 실행하는 경우 : 8080번 포트를 'public'으로 바꾸어주십시오. 
 ![코드스페이스 포트 설정](assets/codespace-port-setting.PNG)
+
+
+>  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
+
 
 ## ✔️ **Getting Started | 튜토리얼**
 
@@ -116,6 +118,11 @@ $ docker-compose up -d
 - `Git`
 - `Vite`
 - `Docker-compose`
+
+> 세부 개발 스택 및 라우팅/API/DB 관련 사항은 세부 폴더의 `README.md`에서 확인 바랍니다!  
+> 기획/디자인 README (이후 추가 예정) | [프론트엔드 README](<WEB(FE)/README.md>) | [백엔드 README](<WEB(BE)/README.md>) | [AI/ML README](AI/README.md)
+
+![밀리루틴의 개발 스택](assets/development-stack.PNG)
 
 ## 👋 **Team Info | 팀 정보**
 
