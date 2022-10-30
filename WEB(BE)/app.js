@@ -21,9 +21,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('views', './src/views');
-app.set('view engine', 'ejs');
-
 app.use(router);
 
 app.listen(PORT, function () {
