@@ -34,7 +34,13 @@ def ex(a,b):  # a보다 크고 b보다 작거나 같은 유저 번호 갱신
         for u in user:
             tensor=torch.stack([*(d2v[r-1] for r in checked[u])], 0)
             tensor=torch.mean(tensor,0)
-            temp=torch.inner(d2v,tensor)
+            tensor=torch.stack([tensor for _ in range(len(d2v))])
+
+            cos = torch.nn.CosineSimilarity(dim=1, eps=1e-6)
+
+            temp=cos(tensor, d2v)
+
+            # temp=torch.inner(d2v,tensor)
             _, id=torch.sort(temp,descending=True)
             ret[u]=(torch.add(id,1)).tolist()
 
@@ -58,9 +64,7 @@ def ex(a,b):  # a보다 크고 b보다 작거나 같은 유저 번호 갱신
             l=len(tp)
             tp+=[[]for _ in range(b-l+1)]
             for i in range(a+1,b+1):
-                # print(ret, i-a)
                 tp[i]=ret[i-a]
-                # tp[i]=[1]  # 잘 추가되는지
             f.seek(0)
             json.dump(tp,f)
             f.truncate()
