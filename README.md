@@ -1,7 +1,7 @@
 # **밀리루틴(MILIROUTINE) - 군생활 루틴 만들기**
 
+![MILIROUTINE Banner](assets/Banner.png)
 <div align="center">
-    <img src="assets/Banner.png" alt="MILIROUTINE Banner" width="50%" height="50%">
     <br>
     <br>
     <p>군대에서 시작하는 나의 사소한 루틴 쌓기.<br>지키고 싶은 밀리루틴을 만들고 함께 인증해보세요!<br><br>
@@ -10,9 +10,9 @@
     <br>
     <br>
     <div display="flex">
-      <a href="assets/PPT.pdf"><img src="assets/ButtonPPT.png" width="20%" height="20%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="https://www.youtube.com/watch?v=h4L3SUrZ61s"><img src="assets/ButtonVideo.png" width="20%" height="20%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="https://www.figma.com/community/file/1170373715075438188"><img src="assets/ButtonDesign.png" width="20%" height="20%"></a>
+      <a href="assets/PPT.pdf"><img src="assets/ButtonPPT.png" width="30%" height="30%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.youtube.com/watch?v=h4L3SUrZ61s"><img src="assets/ButtonVideo.png" width="30%" height="30%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.figma.com/community/file/1170373715075438188"><img src="assets/ButtonDesign.png" width="30%" height="30%"></a>
     </div>
     <br>
     <br>
