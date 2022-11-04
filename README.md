@@ -1,7 +1,7 @@
 # **밀리루틴(MILIROUTINE) - 군생활 루틴 만들기**
 
 <div align="center">
-    <img src="assets/Banner.png" alt="MILIROUTINE Banner" width="100%" height="100%">
+    <img src="assets/Banner.png" alt="MILIROUTINE Banner" width="50%" height="50%">
     <br>
     <br>
     <p>군대에서 시작하는 나의 사소한 루틴 쌓기.<br>지키고 싶은 밀리루틴을 만들고 함께 인증해보세요!<br><br>
