@@ -1,10 +1,15 @@
 # **밀리루틴(MILIROUTINE) - 군생활 루틴 만들기**
 
 <div align="center">
-    <img src="assets/logo.png" alt="MILIROUTINE Logo" width="60%" height="60%">
-    <p>군대에서 시작하는, 나의 사소한 루틴 쌓기.<br>지키고 싶은 밀리루틴을 만들고, 함께 인증해보세요!<br><br>
-        <a href="http://20.214.203.40">miliroutine.com</a>
+    <img src="assets/Banner.png" alt="MILIROUTINE Logo">
+    <p style="margin: 60px">군대에서 시작하는 나의 사소한 루틴 쌓기.<br>지키고 싶은 밀리루틴을 만들고 함께 인증해보세요!<br><br>
+        <a href="http://miliroutine.com">miliroutine.com</a>
     </p>
+    <div display="flex">
+      <a href="assets/PPT.pdf"><img src="assets/ButtonPPT.png" width="20%" height="20%" style="margin: 20px; margin-bottom: 60px"></a>
+      <a href="https://www.youtube.com/watch?v=h4L3SUrZ61s"><img src="assets/ButtonVideo.png" width="20%" height="20%" style="margin: 20px; margin-bottom: 60px"></a>
+      <a href="https://www.figma.com/community/file/1170373715075438188"><img src="assets/ButtonDesign.png" width="20%" height="20%" style="margin: 20px; margin-bottom: 60px"></a>
+    </div>
 </div>
 
 ## 💡 **Service Needs | 기획 의도**
@@ -17,7 +22,7 @@
 군인의 입장에서, 군인의 특성에 맞춘 루틴 형성 서비스를 제공합니다.
 
 > 개발과 관련된 사항은 세부 폴더의 `README.md`에서 확인 바랍니다!  
-> 기획/디자인 README (이후 추가 예정) | [프론트엔드 README](<WEB(FE)/README.md>) | [백엔드 README](<WEB(BE)/README.md>) | [AI/ML README](AI/README.md)
+> [프론트엔드 README](<WEB(FE)/README.md>) | [백엔드 README](<WEB(BE)/README.md>) | [AI/ML README](AI/README.md)
 
 ## 🩸 **Pain Points | 해결하려는 문제**
 
@@ -85,17 +90,21 @@ $ docker-compose up -d
 
 ## ✔️ **Getting Started | 튜토리얼**
 
-1. **나만의 계정을 만드세요.**
+1. **나만의 계정을 만드세요**
    1. 회원정보 입력하기
    2. AI가 회원님을 더 잘 이해할 수 있도록 관심 카테고리와 선호하는 밀리루틴을 선택해주세요!
-2. **관심 있는 밀리루틴에 참여하세요.**
+    
+2. **관심 있는 밀리루틴에 참여하세요**
    1. AI가 추천하는 밀리루틴
    2. 테마별/인기 밀리루틴 보기
-   3. 밀리루틴을 직접 개설할 수도 있습니다!
-3. **꾸준히 밀리루틴을 지키고 인증하세요.**
-   1. 참여율에 따라 경험치와 포인트를 얻을 수 있습니다.
-   2. 포인트샵에서 원하는 상품을 구매해보세요.
-   3. '나의 밀리루틴' 탭에서 인증 시 사용했던 이미지와 글을 다시볼 수 있습니다.
+   3. [나의 밀리루틴] - [밀리루틴 개설하기] 탭에서 밀리루틴을 직접 개설할 수도 있습니다!
+
+3. **꾸준히 밀리루틴을 지키고 인증하세요**
+   1. 참여율에 따라 경험치와 포인트를 얻을 수 있습니다
+   2. [포인트샵]에서 원하는 상품을 구매해보세요
+   3. [나의 밀리루틴] - [인증하기]에서 인증 시 사용했던 이미지와 글을 다시볼 수 있습니다
+
+- 더 자세한 내용은 [[밀리루틴 소개] 페이지](http://miliroutine.com/about)를 참고해주십시오
 
 ## 🖥️ **Technique Used | 기술 스택**
 
@@ -126,7 +135,7 @@ $ docker-compose up -d
 - `Docker-compose`
 
 > 세부 개발 스택 및 라우팅/API/DB 관련 사항은 세부 폴더의 `README.md`에서 확인 바랍니다!  
-> 기획/디자인 README (이후 추가 예정) | [프론트엔드 README](<WEB(FE)/README.md>) | [백엔드 README](<WEB(BE)/README.md>) | [AI/ML README](AI/README.md)
+> [프론트엔드 README](<WEB(FE)/README.md>) | [백엔드 README](<WEB(BE)/README.md>) | [AI/ML README](AI/README.md)
 
 ![밀리루틴의 개발 스택](assets/development-stack.PNG)
 
