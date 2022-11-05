@@ -5,10 +5,6 @@
 ## ☝️ **프로젝트 실행 방법**
 
 ```shell
-# src/db/.env
-```
-
-```shell
 # src/token/.env
 SECRET_KEY=routine1234
 ```

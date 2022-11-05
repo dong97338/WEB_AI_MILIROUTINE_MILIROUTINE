@@ -5,7 +5,8 @@
     <br>
     <br>
     <p>군대에서 시작하는 나의 사소한 루틴 쌓기.<br>지키고 싶은 밀리루틴을 만들고 함께 인증해보세요!<br><br>
-        <a href="http://miliroutine.com">miliroutine.com</a>
+        <a href="http://miliroutine.com"><big>miliroutine.com</big></a><br>
+        <small>(2022년 11월 한 달만 서버를 열 예정입니다)</small>
     </p>
     <br>
     <div display="flex">
