@@ -95,12 +95,18 @@ $ docker-compose up -d
    <table align="center">
       <tr>
          <td align="center">
-            <b>회원정보 입력하기</b><br><br>
+            <b>회원정보 입력하기</b>
+         </td>
+         <td align="center">
+            <b>선호하는 밀리루틴 선택</b>
+         </td>
+      </tr>
+      <tr>
+         <td align="center">
             아이디, 비밀번호, 닉네임 등 계정 생성에 필요한 기본 정보를 입력합니다
          </td>
          <td align="center">
-            <b>선호하는 밀리루틴 선택</b><br><br>
-            AI의 초기 학습을 위해 관심 카테고리와 선호하는 밀리루틴을 선택합니다. AI는 관심 카테고리 내의 밀리루틴 위주로 추천해줍니다.
+            AI의 초기 학습을 위해 관심 카테고리와 선호하는 밀리루틴을 선택합니다.
          </td>
       </tr>
       <tr>
@@ -118,11 +124,17 @@ $ docker-compose up -d
    <table align="center">
       <tr>
          <td align="center">
-            <b>메인 페이지(로그인 상태)</b><br><br>
+            <b>메인 페이지(로그인 상태)</b>
+         </td>
+         <td align="center">
+            <b>인기 밀리루틴</b>
+         </td>
+      </tr>
+      <tr>
+         <td align="center">
             AI 추천 밀리루틴과 인기 밀리루틴을 요약해서 보여줍니다.
          </td>
          <td align="center">
-            <b>인기 밀리루틴</b><br><br>
             참여자 순으로 정렬된 인기 밀리루틴을 통해 다른 유저들이 선호하는 루틴을 알 수 있습니다.
          </td>
       </tr>
@@ -138,12 +150,18 @@ $ docker-compose up -d
    <table align="center">
       <tr>
          <td align="center">
-            <b>밀리루틴 상세 페이지</b><br><br>
+            <b>밀리루틴 상세 페이지</b>
+         </td>
+         <td align="center">
+            <b>밀리루틴 개설하기</b>
+         </td>
+      </tr>  
+      <tr>
+         <td align="center">
             관심있는 밀리루틴을 클릭하면 상세 정보를 확인하고 참여 신청할 수 있습니다.
          </td>
          <td align="center">
-            <b>밀리루틴 개설하기</b><br><br>
-            마음에 드는 밀리루틴이 없어도 걱정하지 마세요! [나의 밀리루틴] - [밀리루틴 개설하기] 탭에서 밀리루틴을 직접 개설할 수 있습니다.
+            [나의 밀리루틴] - [밀리루틴 개설하기] 탭에서 밀리루틴을 직접 개설할 수 있습니다.
          </td>
       </tr>
       <tr>
@@ -161,12 +179,18 @@ $ docker-compose up -d
    <table align="center">
       <tr>
          <td align="center">
-            <b>나의 밀리루틴 페이지</b><br><br>
-            참여중인 밀리루틴, 좋아요한 밀리루틴 등을 모아서 보여줍니다. 시작일이 지난 루틴의 경우 루틴 참여율을 볼 수 있습니다.
+            <b>나의 밀리루틴 페이지</b>
          </td>
          <td align="center">
-            <b>인증 페이지</b><br><br>
-            [나의 밀리루틴] - [인증하기]에서 이미지와 글을 업로드하여 루틴 수행을 인증합니다. 인증 시 사용했던 이미지와 글을 다시볼 수 있습니다.
+            <b>인증 페이지</b>
+         </td>
+      </tr>
+      <tr>
+         <td align="center">
+            참여중인 밀리루틴, 좋아요한 밀리루틴 등을 모아서 보여줍니다. <br>시작일이 지난 루틴의 경우 루틴 참여율을 볼 수 있습니다.
+         </td>
+         <td align="center">
+            [나의 밀리루틴] - [인증하기]에서 이미지와 글을 업로드하여 루틴 수행을 인증합니다. <br>인증 시 사용했던 이미지와 글을 다시볼 수 있습니다.
          </td>
       </tr>
       <tr>
@@ -181,11 +205,17 @@ $ docker-compose up -d
    <table align="center">
       <tr>
          <td align="center">
-            <b>포인트샵 페이지</b><br><br>
-            루틴 참여율에 따라 경험치와 포인트를 얻을 수 있습니다. [프로필 사진 클릭] - [포인트샵]에서 원하는 상품을 구매해보세요.
+            <b>포인트샵 페이지</b>
          </td>
          <td align="center">
-            <b>설정 페이지</b><br><br>
+            <b>설정 페이지</b>
+         </td>
+      </tr>
+      <tr>
+         <td align="center">
+            루틴 참여율에 따라 경험치와 포인트를 얻을 수 있습니다. <br>[프로필 사진 클릭] - [포인트샵]에서 원하는 상품을 구매해보세요.
+         </td>
+         <td align="center">
             닉네임, 비밀번호 등 회원정보를 수정할 수 있습니다.
          </td>
       </tr>
