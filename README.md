@@ -65,25 +65,25 @@ $ docker-compose up -d
 ```
 
 4. 주의사항   
-(1) localhost로 접속이 가능한 경우 : CORS 에러가 발생하지 않습니다.
-   -  `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = 'http://localhost:8080/api'`(뒤의 `/` 제거)로 변경해주십시오. 
-   -  `WEB(FE)/package.json`에서 "proxy" key를 지워주십시오. 
-   -  `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "server" key를 포함한 그 안의 내용을 모두 지워주십시오. 
 
-(2) localhost로 접속이 불가능한 경우 (예> Github Codespace 등에서 접속하여 자동 포트 포워딩이 되는 경우) : CORS 에러가 발생하여 proxy 설정을 해주어야 합니다.
-   - `WEB(FE)/package.json`에서 "proxy" key의 value로 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오. 
-   - `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "target" key의 value에도 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오.
-   - `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = '/api'`(뒤의 `/` 제거)로 변경해주십시오. (이게 기본 상태임)
+   (1) localhost로 접속이 가능한 경우 : CORS 에러가 발생하지 않습니다.
+      -  `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = 'http://localhost:8080/api'`(뒤의 `/` 제거)로 변경해주십시오. 
+      -  `WEB(FE)/package.json`에서 "proxy" key를 지워주십시오. 
+      -  `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "server" key를 포함한 그 안의 내용을 모두 지워주십시오. 
 
-> Codespace에서 빌드 및 실행하는 경우 : 8080번 포트를 'public'으로 바꾸어주십시오. 
-![코드스페이스 포트 설정](assets/codespace-port-setting.PNG)
+   (2) localhost로 접속이 불가능한 경우 (예> Github Codespace 등에서 접속하여 자동 포트 포워딩이 되는 경우) : CORS 에러가 발생하여 proxy 설정을 해주어야 합니다.
+      - `WEB(FE)/package.json`에서 "proxy" key의 value로 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오. 
+      - `WEB(FE)/vite.config.ts`의 defineConfig 함수의 "target" key의 value에도 자신의 환경에서 8080번 포트가 포워딩된 링크로 변경해주십시오.
+      - `WEB(FE)/src/utils/globalVariables.ts`에서 `SERVER_URL = '/api'`(뒤의 `/` 제거)로 변경해주십시오. (이게 기본 상태임)
 
-> Codespace에서 `AI/requiements.txt`를 설치할 때, torch의 용량이 너무 커서 에러를 발생시키는 경우가 있습니다.   
-그럴 때는 requirements.txt에서 `torch==1.12.1`을 주석처리하시고 r12n2.py의 `try~catch` 구문과 예외 처리 부분을 삭제해주십시오.   
-유저가 많아져 기존 학습 정보로만 추천을 할 수 없는 예외적인 상황에서 torch가 실행되므로 평시의 경우 문제없이 빌드하실 수 있습니다.  
+   > Codespace에서 빌드 및 실행하는 경우 : 8080번 포트를 'public'으로 바꾸어주십시오. 
+   ![코드스페이스 포트 설정](assets/codespace-port-setting.PNG)
 
+   > Codespace에서 `AI/requiements.txt`를 설치할 때, torch의 용량이 너무 커서 에러를 발생시키는 경우가 있습니다.   
+   그럴 때는 requirements.txt에서 `torch==1.12.1`을 주석처리하시고 r12n2.py의 `try~catch` 구문과 예외 처리 부분을 삭제해주십시오.   
+   유저가 많아져 기존 학습 정보로만 추천을 할 수 없는 예외적인 상황에서 torch가 실행되므로 평시의 경우 문제없이 빌드하실 수 있습니다.  
 
->  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
+   >  HTTP ⇆ HTTPS Mixed Contents 오류가 발생할 경우 : Chrome URL 창 왼쪽의 자물쇠 버튼 → [사이트 설정] → [안전하지 않은 콘텐츠]를 '허용'으로 변경하셔서 임시로 꺼주십시오
 
 5. 테스트 계정 ID : `user1`   
     테스트 계정 PW : `test` 
