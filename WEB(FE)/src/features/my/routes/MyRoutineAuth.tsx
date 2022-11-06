@@ -230,7 +230,7 @@ export const MyRoutineAuthPage = () => {
     };
 
     fetchAuthList().then(([rate, list]) => {
-      setParticipationRate(Number(rate * 100));
+      setParticipationRate(Math.floor(rate * 100));
       setAuthList(list);
     });
   }, []);
