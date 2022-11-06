@@ -236,7 +236,7 @@ export const MyRoutineAuthPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!authList || routine.id === 0 || !authList[0].day) {
+    if (authList.length == 0 || routine.id === 0 || !authList[0].day) {
       return;
     }
     const [latestWeek, latestDay] = [authList[0].week, authList[0].day];
