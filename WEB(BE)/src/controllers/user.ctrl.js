@@ -157,7 +157,6 @@ const output = {
           err : '루틴이 없습니다'
       })
 	  }
-    console.log(authRoutines);
     res.json({
       success: true,
       routine: routine[0],
@@ -271,8 +270,8 @@ const routine = {
 
     try {
       const user_no = decoded.no;
-      const routine_id = req.params.routineId;
-      const { week, day, date, img, text } = req.body;
+      const routine_id = Number(req.params.routineId);
+      let { week, day, date, img, text } = req.body;
 
       if (!week) {
         res.status(400).json({
@@ -284,24 +283,14 @@ const routine = {
           success: false,
           err: 'day의 정보가 없습니다!',
         });
-      } else if (!date) {
-        res.status(400).json({
-          success: false,
-          err: 'date의 정보가 없습니다!',
-        });
       } else if (!img) {
-        res.status(400).json({
-          success: false,
-          err: 'img의 정보가 없습니다!',
-        });
+        img = null;
       } else if (!text) {
-        res.status(400).json({
-          success: false,
-          err: 'text의 정보가 없습니다!',
-        });
+        text = null;
       }
 
-      const param = [user_no, routine_id, week, day, date, img, text];
+      // const param = [user_no, routine_id, week, day, img, text];
+      const param = [user_no, routine_id, week, day, date, text];
       data.auth.add(param);
 
       res.json({

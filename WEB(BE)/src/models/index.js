@@ -199,7 +199,8 @@ const auth = {
   },
 
   add: async (values) => {
-    db.query('INSERT INTO auth (user_no, routine_id, week, day, date, img, text) VALUES (?)', [values], function (err, rows, fields) {
+    console.log(values);
+    db.query('INSERT INTO auth (user_no, routine_id, week, day, date, text) VALUES (?)', [values], function (err, rows, fields) {
       if (err) {
         throw new Error(err);
       }
