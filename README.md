@@ -10,12 +10,7 @@
     </p>
     <br>
     <div display="flex">
-      <a href="assets/PPT.pdf">  <svg width="150" height="50" xmlns="http://www.w3.org/2000/svg">
-    <!-- 배경 사각형 -->
-    <rect width="150" height="50" fill="green" rx="10" ry="10"/>
-    <!-- 텍스트 -->
-    <text x="75" y="30" font-size="20" font-family="Arial" fill="white" text-anchor="middle">Example</text>
-  </svg>></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="assets/PPT.pdf"><img src="assets/ButtonPPT.png" width="25%" height="25%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href="https://www.youtube.com/watch?v=h4L3SUrZ61s"><img src="assets/ButtonVideo.png" width="25%" height="25%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href="https://www.figma.com/community/file/1170373715075438188"><img src="assets/ButtonDesign.png" width="25%" height="25%"></a>
     </div>
